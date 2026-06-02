@@ -1,0 +1,769 @@
+food_name,quantity,unit,protein_g,carbs_g,fat_g,calories
+Toasted Plain Waffles,100,g,7.19,49.29,9.61,312
+Seafood Souffle,1,cup,10.62,5.56,9.74,154
+Puff Pastry,1,pastry,7.4,45.7,38.5,558
+Nonfat Frozen Yogurt,1,cup,3.75,21.91,0.41,103
+Ice Cream,1,cup,3.92,29.26,10.14,218
+Chocolate Frozen Yogurt,1,cup,5.24,21.61,1.95,113
+Chocolate Ice Cream Cone,1,cone,4.07,31.76,9.52,222
+Chocolate Puddings,1,snack,2.7,23,4,139
+Vanilla Wafers,100,g,5,73.6,15.2,441
+Apple Pie,1,piece,2.4,37.1,12.5,265
+Milk Chocolate Candies,100,g,7.65,59.4,29.66,535
+Ice Pop,1,single,0,19.23,0.24,79
+Banana Puddings,100,g,2.4,21.2,3.6,127
+Sweet Roll,1,medium,6.2,50.9,16.4,372
+Lemon juice,100,g,0,32,0,130
+Ice Cream Sundae Cone,1,Drumstick,5.55,29.96,15.06,265
+Custard,1,cup,5.07,10.85,3.5,95
+Chocolate Ice Creams,1,cup,3.8,28.2,11,216
+Hard Cands,100,g,0,98,0.2,394
+Plain Muffin,1,small,7.63,43.77,10.87,305
+Yogurt,100,g,3,21.6,3.6,127
+Jellybeans,10,small,0,93.55,0.05,375
+Brownie,1,brownie,4.76,62.54,13.77,379
+Ice Pop Filled with Ice Cream,1,cream,1.16,20.67,3.79,119
+Buttermilk Pancakes,1,pancake,6.8,28.7,9.3,227
+Chocolate Cheesecake,1,piece,6.6,38.44,24.75,389
+Chocolate Coated or Frosted Doughnuts,1,doughnut,5,48,31,474
+Pecan Pie,100,g,4.9,52.2,22.2,412
+Jelly Doughnut,1,doughnut,5.9,39,18.7,340
+Mango juice,100,g,0,25,0,100
+Diet Cheesecake,1,individual,5.74,30.15,9.16,224
+Cheesecake,1,piece,5.5,25.5,22.5,321
+Pancakes,100,g,5.2,36.7,2.5,194
+Cupcakes with Frosting (Low Fat),1,cupcake,4.3,67.2,3.7,305
+Chocolate Cupcake,1,cupcake,3.79,63.59,11.7,356
+Sweet Chocolate Candies,100,g,3.9,59.6,34.2,505
+Bread Pudding,1,cup,5.27,23.26,4.74,153
+Chocolate Wafers,100,g,6.6,72.4,14.2,433
+Brownie with Icing,1,brownie,4.8,63.9,16.3,405
+73% Organic Dark Chocolate,100,g,3,15,14,190
+Chocolate Soft Serve Ice Cream,1,cup,3.7,27.87,9.67,205
+Cream Wafers,1,medium,4.1,70.1,24.3,511
+Plain Waffle,1,round,7.3,48.84,9.55,310
+Plain Pancakes,1,pancake,6.4,28.3,9.7,227
+Shortbread Cookies,1,cookie,6.1,64.5,24.1,502
+Brownie with Peanut Butter Fudge Icing,1,brownie,7.47,59.44,16.98,409
+Vanilla Ice Creams,1,cup,3.5,23.6,11,201
+Strawberry Ice Creams,100,g,3.2,27.6,8.4,192
+Potato Pancakes,1,small,6.06,27.9,14.75,269
+Cheesecake with Fruit,1,piece,6.25,32.9,13.45,273
+100% Whole Wheat or 100% Whole Grain Waffle,1,round,9.22,33.33,11.22,267
+Fruit Waffle,1,round,6.4,44.8,8.24,278
+Lowfat Brownie,1,brownie,5.43,70.23,5.38,324
+Peanut Butter Cookies,1,cookie,9.6,58.9,23.6,477
+Creme or Caramel Filled Chocolate Covered Sugar Wafer,1,wafer,5.2,66.58,25.24,511
+Butter Pound Cake,1,piece,5.5,48.8,19.9,388
+Vanilla Puddings,100,g,2.3,22,3.6,130
+Chocolate Filled Crepe,1,crepe,5.5,20.68,5.54,156
+Marshmallows,100,g,1.8,81.3,0.2,318
+English Muffin,1,muffin,8.87,44.17,1.69,227
+Fruit and/or Nuts Muffin,1,medium,5.5,48,6.5,277
+Tapioca Puddings,100,g,2,19.4,3.7,119
+Cheese and Fruit Strudel,1,piece,6.89,29.84,8.44,220
+Fruit Filled Crepe,1,crepe,4.59,26.57,6.97,184
+Dark Chocolate Miniatures,100,g,2,22,12,200
+Peanut Butter Fudge,1,piece,7.02,66.72,16.59,435
+Chocolate Cake (Without Frosting),1,piece,5.3,53.4,15.1,358
+Light Vanilla Ice Creams (Soft Serve),100,g,4.9,21.8,2.6,126
+Blueberry Pie,1,piece,2.7,33.5,11.9,245
+Berry Strudel,1,piece,3.51,46.78,6.21,251
+Chicken or Turkey Souffle,1,cup,12.34,5.53,11.25,175
+Candy Coated Marshmallow,1,piece,1.16,87.99,0.13,343
+Sugared or Glazed Chocolate Doughnuts,1,doughnut,4.5,57.4,19.9,417
+Sugar Cookies (Includes Vanilla),1,cookie,5.1,67.9,21.1,478
+Light Vanilla Ice Creams,100,g,4.78,25.8,4.83,165
+"Cheesecake (From Mix, No-Bake Type)",100,g,5.5,35.5,12.7,274
+Cupcake,1,cupcake,2.84,67.64,10.93,369
+Rich Dark Chocolate,100,g,2,24,13,210
+Chocolate Cake (with Chocolate Frosting),1,piece,4.1,54.6,16.4,367
+White Chocolate Candies,100,g,5.87,59.24,32.09,539
+Frozen Yogurt,1,cup,4.7,19.62,1.47,107
+Spinach Souffle,1,cup,7.91,5.82,12.95,171
+Cupcake with Icing,1,cupcake,2.85,67.8,10.96,370
+Cherry Pie,1,piece,2,39.8,11,260
+Caramel Custard Flan (Dry Mix),100,g,0,91.6,0,348
+Vanilla Fudge,1,piece,1.05,82.28,5.44,384
+Light Ice Cream Cone,1,cone,4.88,28.06,3.14,156
+Cookie,100,g,5.42,68.97,21.39,486
+Dried Fruit Mixture,100,g,2.19,64.81,0.44,244
+Dried Apricot,100,g,3.39,62.64,0.51,241
+Mandarin Orange,100,g,0.45,16.19,0.1,61
+Grapefruit (Pink and Red),1,fruit,0.77,10.66,0.14,42
+Fruit Salad,1,cup,0.67,13.16,0.86,57
+Oranges,1,fruit,0.94,11.75,0.12,47
+Raisins,100,g,3.07,79.18,0.46,299
+Cranberries,100,g,0.39,12.2,0.13,46
+Plums,1,fruit,0.37,16.28,0.1,63
+Fig Bar,1,Newton,3.7,70.9,7.3,348
+Bananas,1,medium,1.09,22.84,0.33,89
+Grapes,1,seedless,0.63,17.15,0.35,67
+Kiwi Fruit,1,fruit,1.14,14.66,0.52,61
+Strawberries,100,g,0.43,9.13,0.11,35
+Figs,1,medium,0.75,19.18,0.3,74
+Pineapple,100,g,0.42,15.7,0.08,60
+Watermelon Juice,1,cup,0.61,7.55,0.15,30
+Apple Banana,1,fruit,1.09,22.84,0.33,89
+"Blueberries (Solids and Liquids, Heavy Syrup, Canned)",1,cup,0.65,22.06,0.33,88
+Raspberries,100,g,1.2,11.94,0.65,52
+"Blueberries (Unsweetened, Frozen)",1,cup,0.42,12.17,0.64,51
+Frozen Blackberries,100,g,1.18,15.67,0.43,64
+Avocados,100,g,1.96,8.64,15.41,167
+Bananas (Large),100,g,1,31,0,121
+Berries,1,serving,0.49,5.75,0.22,24
+"Tangerines (Mandarin Oranges, Juice Pack, Canned)",1,cup,0.62,9.57,0.03,37
+Apples,1,medium,0.26,13.81,0.17,52
+Coconut,100,g,3.33,15.23,33.49,354
+"Blueberries (Sweetened, Frozen)",100,g,0.4,21.95,0.13,81
+Peaches,1,medium,0.4,11.1,0.1,42
+Pears,1,medium,0.38,15.46,0.12,58
+"Red Kidney Beans (with Salt, Cooked, Boiled)",100,g,8.67,22.8,0.5,127
+Lentils,100,g,25.8,60.08,1.06,353
+Fried Tofu,1,piece,17.19,10.49,20.18,271
+"Fruit Flavored Drink (made From Sweetened Powdered Mix, Fortified with Vitamin C)",1,cup,0,8.98,0.01,35
+Vanilla Shake,1,medium,3.37,19.59,6.52,148
+Unsweetened Iced Tea,1,cup,0,0.08,0,0
+Apple Juice Drink,1,cup,0.02,12.91,0.03,50
+Lemonade,1,cup,0.07,10.43,0.04,40
+Chocolate Milk (Lowfat),1,cup,3.24,10.44,1,63
+Coffee,1,mug,3.1,85.94,5.56,406
+Skim Chocolate Milk,1,cup,3.42,10.89,0.28,56
+"Fruit Punch (made with Soda, Fruit Juice and Sherbet or Ice Cream)",1,cup,0.16,4.76,0.15,21
+Chocolate Ice Cream Soda,1,soda,1,15.23,2.9,87
+Margarita,1,cocktail,0.06,13.86,0.11,218
+Root Beer Float,100,g,7,75,15,470
+Grapefruit Juice,1,cup,0.52,8.96,0.1,38
+Low Calorie Lemonade,1,cup,0.02,0.52,0,2
+Chocolate Shake,1,medium,3.4,20.5,3.7,127
+"Lemonade-Flavor Drink (Powder, with Water)",1,cup,0,10.8,0,42
+Chocolate Milk (Whole),1,cup,3.17,10.34,3.39,83
+Vegetable Juice Cocktail (Canned),1,cup,0.63,4.55,0.09,19
+Limeade,1,cup,0,18.11,0,72
+Espresso Coffee,1,espresso,0.12,0,0.18,2
+Cocoa and Sugar Mixture (with Lowfat Milk),1,cup,3.44,12.04,1.1,71
+Orange Juice Drink,1,cup,0.2,13.41,0,54
+Water (Bottled),1,fl,0,0,0,0
+Iced Coffee with Sugar,1,coffee,0.11,4.02,0.01,16
+Fruit Smoothie Drink,1,cup,1.06,18.16,0.87,80
+Iced Tea,1,cup,0.01,9.89,0,38
+Hot Cocoa Milk,1,cup,3.52,10.63,2.33,77
+Egg Yolk,1,large,15.86,3.59,26.54,322
+Scrambled Egg,2,eggs,13.84,2.08,16.18,212
+Fried Egg,1,egg,13.63,0.88,15.31,201
+Egg White,1,egg,10.9,0.73,0.17,52
+Egg Omelet,1,egg,10.62,0.69,12.02,153
+Fried Egg without Fat,1,large,14.18,0.87,11.21,166
+Cage Free Fresh Hard Cooked Peeled Eggs,100,g,6,0,4,60
+Cabbage Salad or Coleslaw with Dressing,1,cup,1.28,7.65,12.85,146
+Caesar Salad with Romaine,1,cup,5.03,6.52,14.17,170
+"Lettuce Salad with Egg, Tomato, and/or Carrots",1,cup,3.73,3.63,2.73,53
+Pasta or Macaroni Salad with Meat,1,cup,6.66,17.94,8.15,172
+Chicken or Turkey Salad,1,cup,16.2,1.4,17.31,229
+Chicken or Turkey Salad with Egg,1,cup,15.16,1.56,15.71,211
+Potato Salad,1,cup,2.68,11.17,8.2,143
+"Lettuce Salad with Avocado, Tomato, and/or Carrots",1,cup,1.13,5.3,3.46,52
+Cabbage Salad or Coleslaw with Apples and/or Raisins with Dressing,1,cup,1.45,15.21,14.81,191
+Greek Salad,1,cup,6.66,3.22,6.93,101
+Light Caesar Salad Kit,100,g,2,8,6,90
+Egg White Salad with Chives,100,g,7,2,3,60
+Taco Salad,1,cups,6.68,11.91,7.46,141
+"Taco or Tostada Salad with Beef, Beans and Cheese in Fried Flour Tortilla",1,salad,9.53,14.7,13.12,212
+Caesar Salad without Croutons,100,g,3,4,10,120
+Reduced Fat Greek Salad,100,g,7,9,3,140
+Tuna Salad with Egg,1,cup,13.71,6.26,12.93,196
+Tuna Salad with Cheese,1,cup,14.44,6.87,14.72,217
+"Chicken or Turkey Garden Salad (Chicken and/or Turkey, Other Vegetables Excluding Tomato and Carrots)",1,cup,12.31,1.93,1.45,72
+Egg Salad,1,cup,9.2,1.93,30.26,318
+Chicken Caesar Salad,100,g,8,5,11,150
+German Style Potato Salad,1,cup,2.52,16.66,1.24,88
+Lettuce Salad with Assorted Vegetables (Including Tomatoes and/or Carrots),1,cup,0.87,3.8,0.17,17
+Potato Salad Side Dish,0.333,cup,1.53,13.53,6.03,114
+Mixed Salad Greens,1,cup,1.52,3.2,0.24,17
+Greek Salad (Small),100,g,3,9,32,340
+Macaroni or Pasta Salad with Chicken,1,cup,10.11,15,13.34,221
+Taco Salad with Chili Con Carne,1,cups,6.67,10.18,5.03,111
+Eggless Egg Salad,100,g,7,4,8,110
+Cabbage Salad or Coleslaw with Pineapple with Dressing,1,cup,1.01,10.37,11.76,146
+Broccoli Coleslaw,100,g,2,5,0,25
+Macaroni,100,g,7.07,19.49,9.14,189
+Pasta Salad,100,g,3.76,22.98,10.63,202
+"Oriental Chicken or Turkey Garden Salad (Chicken and/or Turkey, Lettuce, Fruit, Nuts)",1,cup,10.83,5.66,5.29,113
+Old Fashioned Potato Salad,100,g,2,23,8,170
+Lettuce Salad with Assorted Vegetables,1,cup,0.74,3.14,0.15,15
+Spaghetti,1,cup,5.76,30.68,0.92,157
+"Brown Rice (Long-Grain, Cooked)",100,g,2.58,22.96,0.9,111
+Tri-Colored Couscous,100,g,7,43,0,210
+Cheese Filled Ravioli,1,cup,8.49,20.22,6.7,178
+Organic Whole Wheat Couscous,100,g,6,35,1,160
+Wild Rice (Cooked),1,cup,3.99,21.34,0.34,101
+Pasta with Meat Sauce,1,cup,7.93,13.07,5.12,129
+Meatless Cheese Filled Tortellini with Tomato Sauce,1,cup,5.52,15.29,5.5,133
+Mushroom Risotto,100,g,9,82,8,430
+"Egg Noodles (Enriched, Cooked)",1,cup,4.54,25.16,2.07,138
+Ravioli with Tomato Sauce,1,cup,7.25,14.67,5.97,142
+Noodles,1,cup,4.51,25.01,2.06,137
+Lasagna with Chicken or Turkey,1,piece,10.14,17.2,5.55,160
+Meat Filled Tortellini with Tomato Sauce,1,cup,6.72,16.05,5.07,137
+Whole Wheat Spaghetti,1,cup,5.3,26.38,0.54,123
+Dry Couscous,100,g,12.76,77.43,0.64,376
+Valenciana Style Paella with Meat (Paella Valenciana),1,cup,19.4,15.49,15.9,287
+Cheese Filled Tortellini with Cream Sauce,1,cup,6.46,15.56,7.42,156
+Macaroni or Noodles with Cheese (Dry Mix),1,cup,6.25,25.74,10.06,219
+New Orleans Style Reduced Sodium Jambalaya,100,g,4,34,0.5,160
+Meatless Spaghetti with Tomato Sauce,1,cup,3.98,21.62,1.61,118
+"White Rice (Long-Grain, Cooked)",100,g,2.69,28.17,0.28,130
+Puerto Rican Style Seafood Paella (Paella A La Marinera),1,cup,15.84,9.35,4.45,144
+New Orleans Style Jambalaya Rice,100,g,3,29,5,180
+White Rice,1,cup,2.66,27.9,0.28,129
+Spaghetti with Tomato Sauce and Vegetables,1,cup,3.56,18.48,1.58,101
+Brown and Wild Rice,1,cup,2.35,20.05,2.61,113
+Jambalaya with Meat and Rice,1,cup,10.7,9.31,8.69,161
+Seafood Paella,100,g,77,71,36,920
+Macaroni or Noodles with Cheese,1,cup,7.94,21.46,9.4,203
+Meatless Pasta with Tomato Sauce,1,cup,3.05,16.76,0.47,83
+Meat Filled Tortellini,1,cup,12.64,17.36,7.65,193
+Chicken Fried Rice,1,cup,6.29,21.12,6.04,166
+White and Wild Rice,1,cup,2.17,20.64,2.12,112
+"Brown Rice (Medium-Grain, Cooked)",100,g,2.32,23.51,0.83,112
+Macaroni and Cheese (Diet Frozen Meal),1,meal,6.19,17.01,3.94,130
+Macaroni or Noodles with Cheese (Boxed Mix with Cheese Sauce),1,cup,7.04,25.02,5.34,178
+Butternut Squash Risotto,100,g,4,31,1,143
+Gnocchi Alla Sorrentina,100,g,8,39,3,220
+Cheese Filled Ravioli with Meat Sauce,1,cup,7.02,14.02,6.37,142
+Whole Grain Brown Rice Mix Multigrain Pilaf,100,g,5,42,4.5,230
+Paella,1,cup,9.52,16.68,5.44,158
+Lasagna with Meat and Spinach,1,piece,9.43,16.16,5.57,152
+Meat Filled Ravioli,1,cup,12.58,17.36,7.43,191
+Instant White Rice,1,cup,2.16,24.87,0.5,116
+Asparagus Risotto,100,g,4,24,4.5,150
+Macaroni and Cheese Entree (Canned),1,serving,3.38,11.52,2.46,82
+Brown Rice,1,cup,2.56,22.78,0.89,110
+Cheese Gnocchi,1,cup,9.32,8.58,11.83,179
+Rice Pilaf,1,cup,2.07,21.57,3.24,125
+Mediterranean Curry Couscous Mix,100,g,7,40,4,220
+Meatless Lasagna,1,piece,7.76,19.18,4.45,147
+Spinach Macaroni,1,cup,4.86,27.24,0.57,135
+Rice Noodles (Cooked),1,cup,0.91,24.9,0.2,109
+Fried Rice,1,cup,6.3,21.06,6.23,168
+Spaghetti with Tomato Sauce and Meatballs,1,cup,7.22,18.62,5.4,153
+Corn Grits Polenta,100,g,3,27,0.5,140
+Shrimp Fried Rice,1,cup,5.53,21.15,5.86,162
+Lasagna with Meat,1,piece,9.96,17.2,6.01,163
+Cheese Filled Tortellini,1,cup,10.38,36.15,5.56,236
+Ravioli (No Sauce),1,cup,10.79,19.04,7.18,188
+Vegetable Macaroni,1,cup,4.52,26.55,0.11,128
+Organic Mushroom & Onion Polenta,100,g,2,19,0,90
+Whole Wheat Macaroni,100,g,5.3,26.38,0.54,123
+Potato Gnocchi,1,cup,2.36,17.04,6.24,133
+Italian Classics Mini Gnocchi with Potato,100,g,5,60,0,260
+Arugula Lettuce,1,cup,2.58,3.65,0.66,25
+Low Sodium Carrots (Canned),1,cup,0.58,5.31,1.61,36
+"Potatoes (Flesh, with Salt, Boiled)",1,cup,1.87,20.13,0.1,87
+Hawaii Mountain Yam,1,cup,1.34,16.31,0.1,67
+Brussels Sprouts,100,g,3.38,8.95,0.3,43
+Lettuce,1,cup,0.9,2.97,0.14,14
+Brussels Sprouts (Frozen),100,g,3.78,7.86,0.41,41
+Baked Potato Stuffed with Bacon and Cheese (Peel Eaten),1,medium,5.57,18.27,6.44,151
+Green Peas,1,cup,5.42,14.46,0.4,81
+Mixed Vegetables (Frozen),100,g,3.33,13.46,0.52,64
+Sweet Cucumber Pickle,100,g,0.37,31.81,0.26,117
+Mashed Potatoes (Whole Milk and Butter Added),1,cup,1.87,16.77,4.22,113
+Bell Peppers,100,g,0.99,6.03,0.3,26
+Sweet Baby Supremes Baby Cut Carrots,100,g,1,8,0,35
+Creamed Parsnips,1,cup,2.43,13.48,4.88,104
+Pickles,1,medium,0.62,4.12,0.19,18
+"Succotash (Corn and Limas) (Cream Style, Canned)",1,cup,2.64,17.61,0.54,77
+Okra (Frozen),100,g,1.69,6.63,0.25,30
+Snow or Sugar Snap Peas,10,pea,2.8,7.55,0.2,42
+Peeled Baby-cut Carrots,100,g,1,7,0,30
+Minced Garlic,100,g,0,1,0,5
+Jalapeno Peppers,1,pepper,1.35,5.91,0.62,30
+Cooked Okra (Canned),1,cup,1.81,4.44,2.4,41
+Black Olives,1,small,0.88,6.06,9.54,105
+"Cooked Lima and Corn Beans (Succotash, Fat Added in Cooking)",1,cup,4.18,19.38,2.97,109
+"Soybeans (Mature Seeds, Steamed, Cooked)",1,cup,8.47,6.53,4.45,81
+"Zucchini (with Salt, Drained, Cooked, Boiled)",1,cup,0.64,3.93,0.05,16
+Cooked Summer Squash,1,cup,0.89,4.22,2.29,37
+"Succotash (Corn and Limas) (Solids and Liquids, Whole Kernel Corn, Canned)",1,cup,2.6,13.98,0.49,63
+"Yellow Sweet Corn (Kernels On Cob, Without Salt, Frozen, Drained, Cooked, Boiled)",1,ear,3.11,22.33,0.74,93
+Cooked Soybeans (Fat Not Added in Cooking),100,g,16.54,9.87,8.92,172
+Chinese Cherry Tomatoes,100,g,1.12,4.8,0.2,22
+Succotash,1,cup,4.29,19.84,0.88,92
+Cooked Celery,1,cup,0.81,3.93,2.54,39
+Cooked Asparagus (from Fresh),1,medium,2.33,4.03,2.21,39
+Cherry Tomatoes,100,g,1,7,0,30
+Savoy Cabbage,100,g,2,6.1,0.1,27
+Broccoli,1,cup,2.82,6.64,0.37,34
+"Beets (Solids and Liquids, Canned)",1,cup,0.73,7.14,0.09,30
+Mashed Potato (from Dry),1,cup,2.02,12.22,5.56,105
+Cooked Artichoke (from Fresh),1,medium,3.37,10.87,2.29,67
+"Sweet Potato (Without Salt, Baked In Skin, Cooked)",100,g,2.01,20.71,0.15,90
+Pickled Celery,1,cup,0.61,2.69,0.15,14
+Fried Batter Dipped Eggplant,100,g,2.4,11.58,10.75,148
+Red Onions,100,g,0.92,10.11,0.08,42
+Cooked Turnip (from Frozen),1,cup,1.48,4.25,2.52,43
+Low Sodium Green Peas (Canned),1,cup,3.13,9.6,1.77,65
+Jerusalem Artichokes,100,g,2,17.44,0.01,76
+Corn On The Cob with Butter,1,ear,3.06,21.88,2.35,106
+"Parsnips (Without Salt, Drained, Cooked, Boiled)",1,cup,1.32,17.01,0.3,71
+Chinese Broccoli (Cooked),1,cup,1.14,3.81,0.72,22
+Radishes,100,g,0.68,3.4,0.1,16
+Cooked Japanese Radish (Daikon) (Fat Not Added in Cooking),1,cup,0.63,4.34,0.11,19
+Carrots,100,g,0.93,9.58,0.24,41
+Cooked Turnip (from Fresh),1,cup,0.69,4.94,2.37,42
+"Pickled Beets (Solids and Liquids, Canned)",100,g,0.8,16.28,0.08,65
+"Mixed Vegetables (Drained Solids, Canned)",100,g,2.59,9.26,0.25,49
+"Leeks (Bulb and Lower Leaf-Portion) (Without Salt, Drained, Cooked, Boiled)",1,leek,0.81,7.62,0.2,31
+Beets,100,g,1.61,9.56,0.17,43
+Oriental Radishes,1,radish,0.6,4.1,0.1,18
+"White Sweet Corn (Kernels On Cob, with Salt, Frozen, Drained, Cooked, Boiled)",1,ear,3.11,22.33,0.74,94
+Spinach,1,cup,2.86,3.63,0.39,23
+Mushrooms,1,cup,3.09,3.28,0.34,22
+Soybeans (Mature Seeds),100,g,36.49,30.16,19.94,416
+Tomatoes,100,g,0.88,3.92,0.2,18
+"Hawaii Mountain Yam (with Salt, Steamed, Cooked)",1,cup,1.73,19.99,0.08,82
+"White Sweet Corn (Kernels On Cob, Without Salt, Frozen, Drained, Cooked, Boiled)",1,ear,3.11,22.33,0.74,94
+"Mixed Vegetables (Corn, Lima Beans, Peas, Green Beans, Carrots) (No Salt Added, Canned)",1,cup,1.4,7.31,0.2,37
+Kale (Frozen),100,g,2.66,4.9,0.46,28
+Baby Corn,1,ear,2.62,18.59,1,81
+Cooked Cauliflower (Fat Not Added in Cooking),1,cup,1.75,3.96,0.37,22
+Cucumber (Peeled),100,g,0.59,2.16,0.16,12
+Scallions or Spring Onions,100,g,1.83,7.34,0.19,32
+Olives,100,g,0.92,5.4,11.27,117
+Pumpkin,100,g,1,6.5,0.1,26
+Sweet Potato (Frozen),1,cup,1.71,22.22,0.18,96
+Zucchini,100,g,1.21,3.35,0.18,16
+Crushed Tomatoes (Canned),100,g,1.64,7.29,0.28,32
+Chinese Cabbage,100,g,1.5,2.18,0.2,13
+Asparagus,1,cup,2.2,3.88,0.12,20
+Cooked Eggplant,100,g,0.79,8.31,3.85,65
+"Cooked Cauliflower (from Frozen, Fat Not Added in Cooking)",1,cup,1.6,3.73,0.22,19
+"White Potatoes (Flesh and Skin, Baked)",100,g,2.1,21.08,0.15,94
+Oyster Mushroom,100,g,3.34,6.43,0.44,35
+Cherub Tomatoes,100,g,1,10,1,50
+Green Peppers,100,g,0.86,4.64,0.17,20
+Dill Cucumber Pickles,100,g,0.62,4.12,0.19,18
+"Jalapeno Peppers (Solids and Liquids, Canned)",1,pepper,0.92,4.74,0.94,27
+"Mixed Vegetables (Solids and Liquids, Canned)",100,g,1.42,7.12,0.25,36
+Cooked Broccoli (Fat Not Added in Cooking),1,cup,2.37,7.14,0.41,35
+Sweet Red Peppers,1,cup,0.99,6.03,0.3,26
+Hawaiian Style Pickled Radishes,100,g,1.1,5.2,0.3,28
+"Yam (with Salt, Drained, Cooked, Boiled)",100,g,1.49,27.58,0.14,116
+Cooked Brussels Sprouts,100,g,2.47,6.91,2.77,55
+Yellow Sweet Corn,1,cup,3.22,19.02,1.18,86
+Cooked Turnip (Canned),1,cup,0.69,4.94,2.37,42
+Cooked Kale (from Fresh),1,cup,1.83,5.47,3.12,51
+Yellow Sweet Peppers,100,g,1,6.32,0.21,27
+Green Hot Chili Peppers,100,g,2,9.46,0.2,40
+White Icicle Radishes,1,cup,1.1,2.63,0.1,14
+"Soybeans (Mature Seeds, with Salt, Cooked, Boiled)",100,g,16.64,9.93,8.97,173
+Baby Brussels Sprouts & Butter Sauce,100,g,3,8,1.5,50
+Baby-Cut Carrots Mini Bags,100,g,1,6,0,25
+Baked Potato Stuffed with Sour Cream (Peel Eaten),1,medium,2.6,16.57,6.78,134
+Baby Spinach,1,cup,2.86,3.63,0.39,23
+Baby Zucchini,100,g,2.71,3.11,0.4,21
+Artichoke Hearts in Oil,1,heart,3.19,10.26,8.4,119
+Cabbage,100,g,1.44,5.58,0.12,24
+Butternut Winter Squash,1,cup,1,11.69,0.1,45
+Garlic Powder,1,tsp,16.8,72.71,0.76,332
+Cauliflower (Frozen),100,g,2.01,4.68,0.27,24
+Green Peas (Frozen),1,cup,5.21,13.71,0.37,77
+Leeks,100,g,1.5,14.15,0.3,61
+Baked Potato Stuffed with Cheese (Peel Eaten),1,medium,4.61,18.79,5.36,139
+"Green Peas (Drained Solids, Canned)",100,g,4.42,12.58,0.35,69
+"Yam (Without Salt, Drained, Cooked, Boiled, Baked)",100,g,1.49,27.58,0.14,116
+Garlic,1,clove,6.36,33.06,0.5,149
+"Leeks (Bulb and Lower Leaf-Portion) (with Salt, Drained, Cooked, Boiled)",1,leek,0.81,7.62,0.2,31
+Pickled Eggplant,100,g,0.9,9.77,0.7,49
+Okra,100,g,2,7.03,0.1,31
+Spaghetti Winter Squash,100,g,0.64,6.91,0.57,31
+Turnips,100,g,0.9,6.43,0.1,28
+Cooked Beets (from Fresh),1,cup,1.63,9.69,2.28,61
+Acorn Winter Squash,1,cup,0.8,10.42,0.1,40
+Dill Cucumber Pickles (Low Sodium),1,medium,0.62,4.13,0.19,18
+Red Cabbage,1,cup,1.43,7.37,0.16,31
+Sour Cucumber Pickle,100,g,0.33,2.26,0.2,11
+"Yellow Sweet Corn (Kernels On Cob, with Salt, Frozen, Drained, Cooked, Boiled)",1,ear,3.11,22.33,0.74,93
+Young Green Onions,100,g,1.83,7.34,0.19,32
+Broccoli Raab,1,oz,3.17,2.85,0.49,22
+"Pumpkin (with Salt, Canned)",100,g,1.1,8.09,0.28,34
+Green Leaf Lettuce,100,g,1.36,2.79,0.15,15
+Roasted Potato,1,medium,2.32,20.06,7,149
+Cooked Pumpkin,100,g,1.08,7.94,1.75,46
+Artichokes (Globe or French),1,medium,3.27,10.51,0.15,47
+Mashed Potato (from Fresh),1,cup,2.11,13.22,6.96,122
+Cooked Pumpkin (from Canned),100,g,1.08,7.94,1.75,46
+Mashed Potatoes (Whole Milk Added),100,g,1.92,17.53,0.57,83
+Cauliflower,1,cup,1.98,5.3,0.1,25
+Cooked Leek,1,leek,1.51,14.24,4,94
+Cooked Okra,1,cup,1.92,5.08,2.32,43
+Baked Potato (Peel Eaten),1,medium,2.43,20.53,2.2,109
+Baked Potato (Peel Not Eaten),1,medium,1.95,21.39,0.1,92
+"Mushrooms (Drained Solids, Canned)",100,g,1.87,5.09,0.29,25
+Italian Cherry Tomatoes,100,g,1,6,0,30
+Mature Red Chili Hot Peppers (Canned),1,tbsp,0.9,3.9,0.6,21
+Cooked Green Peas (Canned),1,cup,4.31,12.29,2.46,86
+Yellow Summer Squash,1,cup,1.21,3.35,0.18,16
+Cooked Spinach (from Fresh),1,cup,2.88,3.68,2.25,40
+Sweet Onions,1,oz,0.8,7.55,0.08,32
+Cooked Kale (from Canned),1,cup,1.83,5.47,3.12,51
+Stuffed Green Olives,1,small,1.04,4.02,13.22,128
+Green Cabbage,100,g,1.44,5.58,0.12,24
+Zucchini (Frozen),100,g,1.16,3.59,0.13,17
+"Yellow Sweet Corn (Whole Kernel, Drained Solids, Canned)",100,g,2.62,18.59,1,81
+Eggplant,100,g,1.01,5.7,0.19,24
+Green Chili Peppers (Canned),1,oz,0.72,4.6,0.27,21
+Onions,100,g,0.92,10.11,0.08,42
+"Sweet Potato (Without Skin, Cooked, Boiled)",100,g,1.37,17.72,0.14,76
+"Cooked Cauliflower (from Fresh, Fat Not Added in Cooking)",1,cup,1.83,4.08,0.45,23
+"Sweet Potato (Mashed, Canned)",1,cup,1.98,23.19,0.2,101
+Cooked Turnip,1,cup,0.69,4.94,2.37,42
+Cooked Mixed Vegetables,100,g,2.78,12.74,2.12,81
+Mashed Potato,1,cup,1.8,15.72,3.54,100
+"Asparagus (Drained Solids, Canned)",1,spear,2.14,2.46,0.65,19
+Cucumber,100,g,0.65,3.63,0.11,15
+Fried Okra,100,g,2.58,14.26,14.06,188
+Green Olives,1,small,1.03,3.84,15.32,145
+"Spinach (Drained Solids, Canned)",1,cup,2.81,3.4,0.5,23
+Sweet Potato,100,g,1.57,20.12,0.05,86
+Red Tomatoes,1,medium,0.88,3.92,0.2,18
+Baked  Trout,100,g,24.37,0.41,9.16,188
+Grilled Fish,1,fillet,22.6,0.28,1.18,109
+Fish,100,g,17.76,0,0.92,84
+Snapper,100,g,44.7,0,2.9,218
+Pacific Red Snapper Fillet,100,g,21,0,2,110
+Smoked Trout,100,g,37.04,0,11.79,264
+Pink Salmon,100,g,19.94,0,3.45,116
+Lobster,1,small,20.33,1.27,0.58,97
+Shrimp,1,medium,27.59,1.24,2.35,144
+Chicken Soup,1,cup,1.68,3.88,1.02,31
+Tomato Soup,1,cup,1.25,7.35,1.2,42
+Vegetable Soup,100,g,1.72,9.78,1.58,59
+Chicken Rice Soup,1,cup,1.47,2.97,0.79,25
+Beef Stock,1,cup,0.35,0.33,0.08,3
+Fish Broth,1,cup,2,0.4,0.6,16
+Chicken Chili,1,cup,7.76,7.75,3.15,89
+Beef Noodle Soup,1,cup,1.98,3.68,1.26,34
+Chicken Noodle Soup,1,cup,1.32,3.07,0.99,27
+Low Fat Milk,1,cup,3.37,4.99,0.97,42
+Sour Cream,1,tbsp,3.16,4.27,20.96,214
+Butter,1,tbsp,0.85,0.06,81.11,717
+Cream Cheese,1,tbsp,7.55,2.66,34.87,349
+Whole Milk,1,cup,3.22,4.52,3.25,60
+Mozzarella Cheese,1,slice,25.96,3.83,20.03,302
+Margarine,1,tbsp,0.6,0,59.17,526
+Light Cream,1,tbsp,2.7,3.66,19.31,195
+Lowfat Plain Yogurt,100,g,5.25,7.04,1.55,63
+Buttermilk,100,g,4.1,5.3,2,56
+Milk,1,cup,3.29,4.71,2,50
+Heavy Cream,1,tbsp,2.05,2.79,37,345
+Low Fat Half & Half,100,g,1,1,1.5,25
+Vanilla Yogurt (Lowfat),1,cup,4.93,13.8,1.25,85
+Cheddar Cheese,1,slice,24.9,1.28,33.14,403
+Cheddar or Colby Cheese (Low Sodium),1,oz,24.35,1.91,32.62,398
+Swiss Cheese (Low Fat),1,slice,28.4,3.4,5.1,179
+Syrup,1,tbsp,0,66.86,0.04,259
+Tahini Sesame Butter Seeds,100,g,17.4,21.5,53.01,592
+Traditional Hummus,100,g,2,3,6,70
+Honey,1,tbsp,0.3,82.4,0,304
+Brown Sugar,100,g,0,97.33,0,377
+Oil and Vinegar Salad Dressing (Home Recipe),1,tbsp,0,2.5,50.1,449
+White Sugar,100,g,0,99.98,0,387
+Mayonnaise (Low Calorie),1,tbsp,0.9,23.9,19,263
+Extra Virgin Olive Oil,1,tbsp,0,0,14,120
+Chutney,1,tbsp,1.33,36.85,0.29,149
+Teriyaki Sauce,1,tbsp,5.93,15.95,0,84
+Hummus,1,tbsp,4.86,20.12,8.59,177
+Sunflower Oil,100,g,0,0,100,884
+Smooth Peanut Butter (with Salt),2,tbsps,25.09,19.56,50.39,588
+Sesame Paste (Sesame Butter Made From Whole Seeds),1,tbsp,17,21.19,53.76,595
+Maple and Corn and/or Cane Pancake Syrup Blends,1,tbsp,0,69.6,0.1,265
+Bacon Ranch Salad Dressing,100,g,1,2,11,100
+Garlic Pepper,100,g,0,0,0,0
+Sea Salt,100,g,0,0,0,0
+Peanut Butter,1,tbsp,25.09,19.56,50.39,588
+Teriyaki Sesame Ginger Barbeque Sauce,100,g,0,12,0,50
+Chocolate Syrup,1,tbsp,2.1,65.1,1.13,279
+Equal Sweeteners (Aspartame) Packets,1,serving,2.17,89.08,0,365
+"Fructose Sweetener (Sugar Substitute, Dry Powder)",1,tsp,0,100,0,368
+Soy Sauce (Shoyu),1,tbsp,6.28,7.61,0.04,53
+Spaghetti Sauce with Vegetables (Homemade-Style),1,cup,1.55,7.39,2.17,49
+Major Grey's Chutney,100,g,0,14,0,60
+Hamburger Pickle Relish,1,tbsp,0.63,34.48,0.54,129
+Low Sodium Barbecue Sauce,1,tbsp,1.8,12.8,1.8,75
+Turkey Gravy (Canned),1,tbsp,2.6,5.1,2.1,51
+Roasted Red Pepper Hummus,100,g,2,5,4,60
+Apple Cranberry Chutney,100,g,0,8,0,30
+Ketchup (Low Sodium),100,g,1.74,27.86,0.38,107
+Homemade-Style Spaghetti Sauce with Meat and Vegetables,1,cup,8.2,5.64,6.38,110
+Chunky Peanut Butter (with Salt),2,tbsps,24.06,21.57,49.94,589
+Red Salsa,1,cup,0.68,3.83,0.14,17
+Pancake Syrup,1,tbsp,0,61.47,0,234
+Horseradish Mustard,1,tsp,3.95,7.78,3.11,66
+Italian Salad Dressing (Fat Free),1,tbsp,0.97,8.75,0.87,47
+"Tomato Chili Sauce (with Salt, Bottled)",1,cup,2.5,19.79,0.3,104
+Thick Crust Cheese Pizza,1,piece,12.07,31.65,10.55,270
+Deep Fried Potato French Fries (from Frozen),1,strip,3.76,37.53,17.03,319
+Hash Brown (from Frozen),1,patty,3.14,27.93,11.43,217
+Frankfurter or Hot Dog with Catsup and/or Mustard on Bun,1,frankfurter,9.75,21.76,15.8,270
+"Meatless Taco or Tostada with Beans and Cheese, Lettuce, Tomato and Salsa",1,taco,6.01,18.66,7.76,164
+Enchilada with Beef,1,enchilada,10.02,17.99,8.7,187
+French Bread Pizza Sausage & Pepperoni,100,g,17,43,24,460
+Pizza with Meat and Vegetables,1,piece,10.16,27.42,11.68,256
+Meatless Calzone with Cheese,1,calzone,18.75,27.59,21.95,385
+Supreme Calzone,100,g,10,33,12,280
+"Curry Sauce (Dry, Dehydrated)",1,cup,9.38,50.62,23.1,427
+Burrito with Beef (No Beans),1,small,18.92,23.73,14.04,303
+French Fries,100,g,6,53,21,420
+Chicken Curry,1,chicken,11.47,4.74,6.67,124
+Hamburger on Bun,1,hamburger,15.71,28.83,11.8,290
+"Enchilada with Beef, Beans and Cheese",1,cup,7.92,17.97,8.91,179
+Pizza with Meat,1,piece,12.09,31.45,13.8,301
+Meatless Soyburger with Cheese on Bun,100,g,13.7,24.57,6.93,215
+"Fajita Style Chicken Sandwich with Cheese, Lettuce and Tomato on Pita Bread",1,pita,10.5,13.59,5.9,150
+Hash Brown (from Fresh),1,medium,2.98,34.9,12.44,263
+"Pepperoni Pizza (Frozen, Cooked)",1,serving,11.21,28.51,15.2,296
+Quesadilla with Poultry and Cheese,1,quesadilla,17.15,20.14,17.14,306
+"Breaded Chicken Patty, Fillet or Tenders",1,patty,15.59,16.32,18.82,297
+Hash Browns,100,g,1,24,8,180
+Baked or Fried Batter Dipped Onion Rings (from Frozen),1,small,7.08,31.39,19.73,331
+Soy Burger,1,patty,17.91,13.4,5.97,179
+Onion Rings,100,g,9,66,30,560
+Spinach Ricotta Calzone,100,g,23,45,20,450
+Thin Crust Cheese Pizza,1,piece,12.5,29.45,12.53,281
+Hamburger with Tomato and/or Catsup on Bun,1,hamburger,13.4,30.75,9.61,265
+Nachos with Chicken or Turkey and Cheese,1,order,23.21,12.07,15.94,286
+Meatless Vegetable Burger or Patty,1,patty,17.91,13.4,5.97,179
+Beef Curry,1,cup,11.69,5.8,12.96,184
+"Tostada with Beans, Beef and Cheese",1,piece,7.15,13.18,7.53,148
+"Nachos with Beef, Beans and Cheese",1,cup,14.3,18.57,16.18,275
+"Taco or Tostada with Beef, Cheese and Lettuce",1,taco,13.95,20.77,16.22,283
+"Taco or Tostada with Beef, Lettuce, Tomato and Salsa",1,taco,10.29,14.43,10.22,189
+Frozen Chicken Nuggets,100,g,10,12,10,180
+Veggie Burgers,1,pattie,15.7,14.27,6.3,177
+Plain Cheeseburger on Bun,1,cheeseburger,16.12,26.04,13.61,296
+Chicken Nuggets,1,nugget,15.59,16.32,18.82,297
+Beef Frankfurter or Hot Dog,1,frankfurter,11.96,4.32,30.39,341
+"14"" Pepperoni Pizza (Thick Crust)",1,slice,12.43,30.4,12.49,284
+Cheeseburger,1,sandwich,14.48,31.13,14.85,313
+Burrito with Beef and Beans,1,medium,11.85,24.42,9.23,230
+Chicken Fajitas (Diet Frozen Meal),1,meal,8.86,15.85,2.6,122
+"Bacon Cheeseburger with 1/4 Lb Meat, Mayonnaise or Salad Dressing and Tomatoes on Bun",1,lb,15.27,14.44,15.7,262
+Meatless Enchilada with Cheese,1,enchilada,9.74,16.04,13.64,221
+"Taco or Tostada with Beans, Cheese, Meat, Lettuce, Tomato and Salsa",100,g,8.12,12.54,7.85,151
+Cheese Pizza,1,piece,12.33,30.33,11.74,276
+Hamburger with 1/4 Lb Meat on Bun,1,lb,18.25,20.33,14.86,294
+Hamburger (Single Patty),100,g,13.69,33.9,13.13,305
+Fat Free Frankfurter or Hot Dog,1,frankfurter,12.5,11.21,1.59,109
+Burrito with Beef and Cheese,1,medium,17.73,26.76,16.6,332
+Artichoke & Cheese Calzone,100,g,17,40,16,380
+Baked or Fried Batter Dipped Onion Rings,1,medium,6.76,31.98,19.39,329
+Potato French Fries,1,order,3.48,35.66,14.06,274
+Quesadilla with Meat and Cheese,1,quesadilla,17.25,20.14,19.12,324
+"Taco or Tostada with Beef, Cheese, Lettuce, Tomato and Salsa",100,g,9.67,10.96,10.25,173
+Cheeseburger with Bacon and Condiments,1,sandwich,16.41,19.04,18.85,312
+Enchilada with Chicken and Cheese in Tomato- Based Sauce,1,enchilada,10.76,15.34,9.51,186
+Simple Pepperoni Hand-tossed Pizza,100,g,11,26,7,210
+Hamburger (Single Patty with Condiments),1,sandwich,11.62,32.31,9.22,257
+Breaded or Battered Potato French Fries,1,curls,5.83,31.14,19.6,322
+Natural Chicken Nuggets,100,g,11,17,6,170
+Lamb Curry,1,cup,11.96,1.57,5.86,109
+"Nachos with Beef, Beans, Cheese and Sour Cream",1,order,10.9,25.03,16.81,290
+Meatless Soyburger,100,g,17.91,13.4,5.97,179
+Fajita with Chicken and Vegetables,1,tortilla,8.82,18.62,5.43,158
+Meatless Quesadilla with Cheese,1,quesadilla,14.1,26.2,20.27,345
+Baked or Fried Batter Dipped Onion Rings (from Fresh),1,small,6.76,31.98,19.39,329
+Hash Brown (from Dry Mix),1,cup,3.14,27.93,11.43,217
+Nachos with Beef and Cheese,1,cup,22.22,13.42,23.15,352
+Lowfat Beef Frankfurter or Hot Dog,1,frankfurter,12.77,1.7,19.68,238
+"French Fried Potatoes (Cottage Cut, Par Fried, Frozen)",100,g,2.42,23.98,5.78,153
+Lowfat Chicken Nuggets,1,nugget,19.29,13.79,6.33,195
+Hashed Brown Potatoes,1,cup,2.7,22.43,12.8,210
+Onion Rings (Breaded and Fried),1,portion,4.46,37.74,18.69,332
+Pizza,100,g,12.33,31.46,11.23,276
+Corn Flakes,100,g,6.7,86.7,0.1,360
+Toasted 100% Whole Wheat Bread,1,regular,10.9,51.7,4.8,277
+Hard Bread Sticks,1,small,12,68.4,9.5,412
+"Meat, Poultry or Fish, Vegetables Sandwich Wrap",1,sandwich,12.35,23.29,9.18,228
+Low Sodium Hard Bread Stick,1,stick,10.64,71.63,10.63,431
+French Rolls,1,roll,8.6,50.2,4.3,277
+Whole Wheat and Rolled Oats with Nuts and Fruit Cereal (Presweetened),0.667,cup,8,73.2,8.4,377
+Cereal,1,cup,7.24,83.02,3.38,376
+Cheese Croissants,1,medium,9.2,47,20.9,414
+Whole Wheat Roti,100,g,5,19,3.5,130
+Sprouted Wheat Bread,1,slice,9.1,47.2,4.1,260
+Potato Bread,1,regular,7.64,50.61,3.29,266
+Wrap Sandwich Filled with Vegetables,1,sandwich,4.54,22.74,6.6,168
+Garlic Naan Bread,100,g,4,28,3,160
+Plain or Buttermilk Biscuit Dough (Lower Fat),100,g,6.7,47.6,4.5,257
+Garlic Bread - Mozzarella,100,g,5,19,9,180
+Whole Wheat Hard Bread Stick,100,g,13.42,68.38,10.54,410
+Whole Wheat Bread with Nuts,1,slice,8.43,42.95,15.76,332
+Whole Wheat Tortilla,1,tortilla,9.61,55.82,1.3,263
+Whole Wheat Pita Bread,1,medium,10.47,55.8,1.43,273
+Granola,100,g,9.22,72.39,11.03,408
+Wheat Bread (Reduced Calorie),1,slice,9.1,43.6,2.3,198
+Cheese Biscuit,1,biscuit,9.25,41.82,18.86,374
+Whole Wheat English Muffin,1,muffin,8.7,44.8,2,223
+Sprouted Corn Tortillas,100,g,2,26,1.5,120
+French or Vienna Bread (Includes Sourdough),1,slice,8.8,51.9,3,274
+"Plain or Buttermilk Biscuits (Dry Mix, Prepared)",100,g,7.3,48.4,12.1,335
+Whole Wheat Hamburger Buns,100,g,5,18,1.5,100
+Garlic Tandoori Naan,100,g,6,39,1.5,210
+French Toast,100,g,7.7,25,10.8,229
+Dumpling,100,g,3.3,20.22,3.21,124
+Vegetable Samosas,1,piece,2.5,11,3,85
+Fish  Fillet,100,g,11.04,21.18,13.25,249
+Pastry filled with Potatoes and Peas (Fried),1,regular,4.67,32.21,17.86,308
+Mousse (Flavors Other Than Chocolate),1,cup,1.46,16.91,15.6,207
+Chocolate and Vanilla Sandwich Cookie,1,sandwich,4.92,71.87,19.54,474
+Bread Stuffing (Dry Mix),1,package,11,76.2,3.4,386
+White Wheat Flour (All Purpose),100,g,10.33,76.31,0.98,364
+Cheese Spread,1,tbsp,16.41,8.73,21.23,290
+Protein Powder,1,tbsp,31,49,9,401
+Tempura Roll,100,g,25,82,11,531
+French Toast with Butter,2,slices,7.66,26.7,13.9,264
+chicken  Spring Roll,100,g,5.94,10.88,5.36,116
+Chocolate Sponge Cake,1,piece,8.25,54.68,6.05,297
+Beef Chow Mein,100,g,9.96,14.04,10.82,191
+White Whole Grain Cornmeal,1,cup,8.12,76.89,3.59,362
+Pineapple juice,100,g,0,28,0,120
+Plain Soy Yogurt,100,g,10,25,6,190
+Chicken Salad Spread,1,tbsp,11.64,7.41,13.52,200
+Egg Roll with Chicken or Turkey,1,egg,6.19,14.54,8.59,161
+Peanuts,100,g,25.8,16.13,49.24,567
+Dry Roasted Pistachio Nuts (Without Salt Added),1,kernel,21.35,27.65,45.97,571
+Dry Roasted Cashew Nuts,100,g,15.31,32.69,46.35,574
+Dry Roasted Almonds (Without Salt Added),100,g,22.09,19.29,52.83,597
+Dried Sunflower Seed Kernels,100,g,22.78,18.76,49.57,570
+Pecan Nuts,1,oz,9.17,13.86,71.97,691
+Dry Roasted Pecan Nuts (Without Salt Added),100,g,9.5,13.55,74.27,710
+Sunflower Seeds,100,g,22.78,18.76,49.57,570
+Walnuts,100,g,15.23,13.71,65.21,654
+Dry Roasted Pistachio Nuts (with Salt Added),1,oz,21.35,26.78,45.97,568
+Roasted Salted Cashew Nuts,1,oz,16.84,30.16,47.77,581
+Mixed Nuts,100,g,16.51,21.58,56.3,617
+Oil Roasted Cashew Nuts,100,g,16.84,30.16,47.77,581
+Roasted Mixed Nuts,100,g,15.52,22.27,56.17,615
+Flaxseed Seeds,1,tbsp,18.29,28.88,42.16,534
+Roasted Soybeans,100,g,35.22,33.55,25.4,471
+Honey Roasted Almonds,1,oz,18.74,25.38,48.61,571
+Roasted Soy Nuts,100,g,9,7,5,100
+Unblanched Dried Brazilnuts,1,oz,14.32,12.27,66.43,656
+Mixed Nuts in Shell,1,cup,14.8,14.04,64.67,650
+Pine Nuts,100,g,7,4,15,150
+Honey Roasted Cashew Nuts,1,whole,14.52,37.48,41.08,542
+Pistachio Nuts,1,oz,20.61,27.97,44.44,557
+Roasted Macadamia Nuts,1,oz,7.79,12.83,76.08,716
+Roasted & Salted Soy Nuts,100,g,10,11,5,130
+Brazil Nuts,100,g,4,3,19,190
+Blanched Almonds,100,g,21.94,19.94,50.62,581
+Dried Whole Sesame Seeds,100,g,17.73,23.45,49.67,573
+Dry Roasted Mixed Nuts,1,oz,17.3,25.35,51.45,594
+Roasted & Salted Pistachios,100,g,6,8,14,170
+Honey Roasted Walnuts,1,oz,12.64,23.58,55.79,602
+Roasted Unsalted Cashew Nuts,100,g,16.84,29.87,47.77,580
+Dried Black Walnuts,1,tbsp,24.06,9.91,59,618
+"Roasted Soybeans (Mature Seeds, No Salt Added)",100,g,35.22,33.55,25.4,471
+Dry Roasted Almonds (with Salt Added),1,oz,22.09,19.29,52.83,597
+Boiled Peanuts,1,nut,13.5,21.26,22.01,318
+Almonds,1,almond,21.26,19.74,50.64,578
+Macadamia Nuts,1,oz,7.91,13.82,75.77,718
+Walnut Halves & Pieces,100,g,4,4,18,180
+Roasted Mixed Nuts with Peanuts,1,assorted,16.76,21.41,56.33,617
+Dried Pine Nuts,100,g,13.69,13.08,68.37,673
+Dried Pumpkin and Squash Seed Kernels,100,g,24.54,17.81,45.85,541
+Honey Roasted Peanuts,1,oz,24.47,23.87,45.77,561
+Lamb Roast,100,g,23.93,0,18.15,266
+Fried Chicken Drumstick No Coating,1,small,27.76,0,13.85,243
+Corned Beef Spread,1,tbsp,27.1,0,14.93,250
+Chicken Drumstick (Skin Not Eaten),100,g,28.05,0,5.61,171
+Fried Chicken Breast No Coating (Skin Eaten),100,g,31.67,0,9.1,216
+Roasted Broiled or Baked Chicken Wing (Skin Eaten),1,small,26.64,0,19.3,288
+Lamb Chop,1,small,22.03,0,24.37,314
+Beef Steak,1,oz,27.29,0,15.01,252
+Roast Beef,1,thin,26.91,0,13.24,234
+Organic Ground Chicken,100,g,21,1,12,200
+Grilled Chicken Breast Fillets,100,g,13,0,9,130
+Chicken Thigh Meat (Broilers or Fryers),100,g,19.65,0,3.91,119
+Grilled Chicken Strips Fajita,100,g,19,5,2.5,120
+Fried Chicken No Coating (Skin Eaten),100,g,28.62,0,15.35,260
+Organic Grilled Chicken Breast Strips,100,g,18,3,1,100
+Chicken Sausage,1,link,17.82,1.52,9.98,172
+Salami,1,slice,13.92,2.25,20.11,250
+Ground Lamb,100,g,16.56,0,23.41,282
+Ground Chicken,100,g,27.07,0,13.49,237
+Beef Sausage,1,link,11.04,3.99,29.08,325
+Beef Salami,1,slice,12.6,1.9,22.2,258
+Deli Turkey or Chicken Breast Meat,1,slice,17.07,4.21,1.66,104
+Veal Loin,100,g,18.89,0,9.14,163
+White Turkey,100,g,13.5,7.7,3,112
+Lamb Shoulder Chop,1,small,22.32,0,19.8,274
+Chicken Wing,1,small,30.21,0,8.06,201
+Chicken Thigh,1,small,24.85,0,15.36,245
+Duck Meat,100,g,18.28,0,5.95,132
+Roasted Broiled or Baked Chicken Drumstick,100,g,26.8,0,11.06,214
+Beef Meatballs,1,medium,12.41,7.58,13.16,202
+Fried Chicken Drumstick No Coating (Skin Eaten),1,medium,27.76,0,13.85,243
+Grilled Chicken,1,medium,28.69,0,7.35,188
+Roasted Broiled or Baked Chicken Thigh,1,small,24.85,0,15.36,245
+Fried Chicken Leg No Coating (Skin Eaten),1,small,27.31,0,14.78,250
+Chicken Drumstick,1,small,26.8,0,11.06,214
+Skinless Chicken Breast,100,g,23.09,0,1.24,110
+Chicken Meatballs,1,medium,19.39,6.94,5.62,161
+Chicken,100,g,27.07,0,13.49,237
+Ground Turkey (Cooked),100,g,27.36,0,13.15,235
+Fried mutton Chop,100,g,26.41,0,18.5,279
+Lamb,100,g,24.32,0,20.77,292
+Turkey,1,thin,28.9,0,7.02,187
+Roti,1,medium,8.8,2.5,56.4,283
+Curry (Kidney Bean),100,g,6.4,8.4,14.8,162
+Mutton Curry,100,g,11.2,12.3,4.8,173
+Kofte-curry,100,g,10.6,11.8,4.6,169
+Chicken Pulao,100,g,7.2,7.9,18,168
+Chapali Kabab,100,g,15.6,18.2,3.3,231
+Shami Kabab,100,g,17.5,12.8,9.5,224
+Chicken Sajji,100,g,25,12.8,1,220
+Fried Fish,100,g,17,9,5.2,172
+Murgh Mussallam,100,g,12.2,15,7,211
+Halwa,100,g,4.2,16.8,36.4,310
+Kheer,100,g,3.4,5,20.4,138
+chicken biryani (250 g),100,g,20.8,20,29,404
+beef biryani,100,g,7.1,6.6,13,147
+mutton biryani,100,g,5.84,4.43,19.62,141
+cooked lentils,100,g,8.39,6.67,18.73,165
+Nihari,100,g,14.54,9.81,4.76,167
+Haleem,100,g,9.77,6.68,15.2,157
+russian salad,100,g,0.96,10.45,6.68,122
+vegetable salad,100,g,1.25,0.07,3.22,16
+chicken breast,100,g,29.55,7.72,0,195
+chicken wing,1,small,26.64,19.3,0,288
+chicken drumstick,1,small,26.8,11.06,0,214
+chicken fried rice,1,cup,6.29,6.04,21.12,166
+oats,100,g,16.89,6.9,66.27,389
+egg omelette,100,g,10.62,12.02,0.69,153
+Boiled egg,1,egg,12.53,10.57,1.12,154
+mix nuts,100,g,16.51,56.3,21.58,617
+cereal,1,cup,7.24,3.38,83.02,376
+chicken corn soup,100,g,7,2,20,130
+Green tea,1,mug,0,0,0.47,2
+coffee,1,mug,0.21,0.04,0.07,2
+Paratha,100,g,2,8,37,230
+Lassi,100,g,4,8,32,207
+youget,100,g,5.25,1.55,7.04,63
+Sandwish,100,g,9.75,14.57,32.88,304
+brown bread,100,g,9.7,4.2,46.1,246
+milkshake,100,g,3.19,4.89,20.11,135
+Butter Chicken,100,g,13.87,14.52,4.32,202
+Chai,1,cup,0.94,10.9,0.94,54
+Chickpea Salad,100,g,7,3,32,91
+Fruit chaat,100,g,0.67,0.86,13.16,57
+Mashed patato,100,g,1.8,3.54,15.72,100
+plain pan cakes,100,g,6.4,9.7,28.3,227
+palak paneer,100,g,6,12,9,150
+Detox Water,100,g,0.07,0.04,10.43,40
+egg fried rice,100,g,12,7,30,200
+cooked mixed vegetable,100,g,2.78,2.13,12.71,81
+chicken paities,100,g,9.4,8,9,147
+Chicken Shawarma,100,g,35.83,76.55,6.31,517
