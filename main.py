@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
+from dotenv import load_dotenv
+load_dotenv()
 from chatbot import chatbot
 from cheatmeal import cheatmeal_route
 from exercise_plan import exercise_plan_route
@@ -12,6 +13,7 @@ from profile_setup import profile_setup_route, profile_validate
 
 from meal_plan import generate_meal_plan_route
 from track_progress import TrackProgress
+
 app = Flask(__name__)
 CORS(app)
 
