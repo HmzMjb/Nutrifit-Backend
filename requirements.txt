@@ -13,7 +13,7 @@ seaborn==0.13.2
 torch==2.9.1+cpu
 torchvision==0.24.1+cpu
 opencv-contrib-python==4.13.0.92
-mediapipe==0.10.35
+mediapipe==0.10.21
 google-generativeai==0.8.6
 google-ai-generativelanguage==0.6.15
 google-api-core==2.30.3

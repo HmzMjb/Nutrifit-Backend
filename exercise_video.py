@@ -56,20 +56,43 @@ VIS_THRESHOLD  = 0.5    # landmark visibility needed for angle calculations
 
 EXERCISE_CONFIG = {
     "Models/Bench_rf.pkl": {
-        "ups":   ["up", "up_close", "up_roll"],
-        "downs": ["down", "down_close"],
+        # KEY FIX: bad classes (up_close, up_roll, down_close) removed from ups/downs.
+        # They are detected by validate_posture() and shown as warnings, but never
+        # trigger a rep count. Only clean-form classes count reps.
+        "ups":   ["up"],
+        "downs": ["down"],
         "bench": True,    # Use 22-landmark feature set
     },
     "Models/Deadlift_rf.pkl": {
-        "ups":   ["up", "up_back", "up_roll"],
-        "downs": ["down", "down_low", "down_roll"],
+        # KEY FIX: bad classes (up_back, up_roll, down_roll, down_low) removed.
+        "ups":   ["up"],
+        "downs": ["down"],
         "bench": False,
     },
     "Models/Squat_rf.pkl": {
+        # KEY FIX: bad classes (down_deep, down_forward) removed.
         "ups":   ["up"],
-        "downs": ["down", "down_deep", "down_forward"],
+        "downs": ["down"],
         "bench": False,
     },
+}
+
+# ── Bad-posture class → warning message map ────────────────────────────────────
+# If a predicted class is in this dict → bad posture (red skeleton + warning).
+# If NOT in this dict → good posture (green skeleton + "Good form!").
+BAD_CLASS_MSGS = {
+    # Deadlift
+    'up_back'      : 'Avoid leaning backward at the top.',
+    'up_roll'      : 'Never round your back while deadlifting.',
+    'down_roll'    : 'Keep your chest up — do not arch your back.',
+    'down_low'     : 'Hips too low — this is not a squat!',
+    # Squat
+    'down_deep'    : 'Too deep — ease up on the depth.',
+    'down_forward' : 'Avoid leaning forward. Keep your back straight.',
+    # Bench Press
+    'up_close'     : 'Keep your arms parallel — not too close together.',
+    'up_roll'      : 'Lock your shoulders — do not extend them.',
+    'down_close'   : 'Open your chest more on the way down.',
 }
 
 
@@ -187,6 +210,11 @@ def validate_posture(path_model, predicted_class, lm_list):
 
     except Exception:
         pass
+
+    # If no geometry check fired but the class is a known bad-posture class,
+    # fall back to the message dict (matches pasted Model_Predictions.py logic).
+    if not msg:
+        msg = BAD_CLASS_MSGS.get(predicted_class, '')
 
     return msg
 
@@ -800,25 +828,29 @@ if __name__ == "__main__":
     # ============================================================
 
     # ── DEADLIFT — WEBCAM ────────────────────────────────────────
+    # Bad classes (up_back, up_roll, down_roll, down_low) handled
+    # automatically via BAD_CLASS_MSGS — never count as reps.
     Make_Predictions(
         "Models/Deadlift_rf.pkl",
-        ups=["up", "up_back", "up_roll"],
-        downs=["down", "down_low", "down_roll"],
+        ups=["up"],
+        downs=["down"],
         webcam=0
     )
 
     # ── SQUAT — WEBCAM ───────────────────────────────────────────
+    # Bad classes (down_deep, down_forward) handled automatically.
     Make_Predictions(
         "Models/Squat_rf.pkl",
         ups=["up"],
-        downs=["down", "down_deep", "down_forward"],
+        downs=["down"],
         webcam=0
     )
 
     # ── BENCH PRESS — WEBCAM ─────────────────────────────────────
+    # Bad classes (up_close, up_roll, down_close) handled automatically.
     Make_Predictions(
         "Models/Bench_rf.pkl",
-        ups=["up", "up_close", "up_roll"],
-        downs=["down", "down_close"],
+        ups=["up"],
+        downs=["down"],
         webcam=0
     )

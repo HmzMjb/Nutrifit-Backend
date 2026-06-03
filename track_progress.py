@@ -113,15 +113,50 @@ class TrackProgress:
         meal_plan_last_updated = self.data.get("meal_plan_last_updated")
 
         if not meal_plan_last_updated:
-            return {"should_regenerate": False, "reason": "no_last_updated"}
+            return {
+                "should_regenerate": False,
+                "reason": "no_last_updated",
+                "14_days_passed": False,
+                "no_of_days_passed": 0,
+                "progress": False,
+            }
         try:
             last_date = datetime.fromisoformat(str(meal_plan_last_updated))
         except:
-            return {"should_regenerate": False, "reason": "invalid_date"}
+            return {
+                "should_regenerate": False,
+                "reason": "invalid_date",
+                "14_days_passed": False,
+                "no_of_days_passed": 0,
+                "progress": False,
+            }
 
         days_passed = (datetime.now() - last_date).days
-        if days_passed < 14:
-            return {"should_regenerate": False, "reason": "not_2_weeks_yet", "days_remaining": 14 - days_passed}
+        fourteen_days_passed = days_passed >= 14
+
+        # ── Progress check (weight history se) ──────────────────────────────
+        progress = False
+        if len(weight_history) >= 2:
+            sorted_history = sorted(weight_history, key=lambda x: x["date"])
+            latest   = float(sorted_history[-1]["weight"])
+            previous = float(sorted_history[-2]["weight"])
+            diff = latest - previous
+            if goal == "weight loss" and diff < 0:
+                progress = True
+            elif goal == "weight gain" and diff > 0:
+                progress = True
+            elif goal == "maintain" and abs(diff) < 0.5:
+                progress = True
+
+        if not fourteen_days_passed:
+            return {
+                "should_regenerate": False,
+                "reason": "not_2_weeks_yet",
+                "days_remaining": 14 - days_passed,
+                "14_days_passed": False,
+                "no_of_days_passed": days_passed,
+                "progress": progress,
+            }
 
         # Step 2: Meal plan follow kiya? (last 14 din mein 70%+ din)
         eaten_foods = self.data.get("eaten_foods", [])
@@ -161,29 +196,63 @@ class TrackProgress:
         plan_followed = total_days_checked >= 10 and matched_days >= 10
 
         if not plan_followed:
-            return {"should_regenerate": False, "reason": "plan_not_followed", "followed_days": matched_days}
+            return {
+                "should_regenerate": False,
+                "reason": "plan_not_followed",
+                "followed_days": matched_days,
+                "14_days_passed": True,
+                "no_of_days_passed": days_passed,
+                "progress": progress,
+            }
 
         # Step 3: Weight improve hua?
         if len(weight_history) < 2:
-            return {"should_regenerate": False, "reason": "not_enough_weight_data"}
+            return {
+                "should_regenerate": False,
+                "reason": "not_enough_weight_data",
+                "14_days_passed": True,
+                "no_of_days_passed": days_passed,
+                "progress": False,
+            }
 
         sorted_history = sorted(weight_history, key=lambda x: x["date"])
-        latest = float(sorted_history[-1]["weight"])
+        latest   = float(sorted_history[-1]["weight"])
         previous = float(sorted_history[-2]["weight"])
         diff = latest - previous
 
         if goal == "weight loss" and diff < -0.5:
-            return {"should_regenerate": False, "reason": "progress_ok"}
+            return {
+                "should_regenerate": False,
+                "reason": "progress_ok",
+                "14_days_passed": True,
+                "no_of_days_passed": days_passed,
+                "progress": True,
+            }
         elif goal == "weight gain" and diff > 0.5:
-            return {"should_regenerate": False, "reason": "progress_ok"}
+            return {
+                "should_regenerate": False,
+                "reason": "progress_ok",
+                "14_days_passed": True,
+                "no_of_days_passed": days_passed,
+                "progress": True,
+            }
         elif goal == "maintain" and abs(diff) < 0.5:
-            return {"should_regenerate": False, "reason": "progress_ok"}
+            return {
+                "should_regenerate": False,
+                "reason": "progress_ok",
+                "14_days_passed": True,
+                "no_of_days_passed": days_passed,
+                "progress": True,
+            }
 
         return {
             "should_regenerate": True,
             "reason": "followed_but_no_progress",
             "followed_days": matched_days,
-            "weight_diff": round(diff, 2)
+            "weight_diff": round(diff, 2),
+            "14_days_passed": True,
+            "no_of_days_passed": days_passed,
+            "progress": False,
         }
     def _is_matched_with_time(self, food_name: str, hour: int, day_index: int, plan_by_day: dict):
         """
