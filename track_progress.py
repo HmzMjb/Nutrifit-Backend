@@ -534,7 +534,7 @@ class TrackProgress:
             }
 
         return clean_numpy({
-            "workoutHours": self._workout_hours(lambda dt: week_start <= dt.date() <= week_end),
+            "workoutHours": self._workout_hours(lambda dt: week_start.date() <= dt.date() <= week_end.date()),
             "totalAllEaten": round(total_all_eaten, 2),
             "unmatchedFoods":     list(set(unmatched)),
             "hasUnmatchedFoods":  len(unmatched) > 0,

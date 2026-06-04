@@ -710,16 +710,21 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                 except Exception:
                     print(f"[process_video] Skipped frame: {traceback.format_exc()}")
                     continue
-
+        fps = cap.get(cv2.CAP_PROP_FPS) or 0
+        total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0
+        dur_secs = (total_frames / fps) if fps > 0 else 0.0
+        dur_hours = dur_secs / 3600.0
         cap.release()
 
         return {
-            "reps":             counter,
-            "confidence":       round(prob, 2),
-            "pose":             last_pred,
-            "suggestion":       last_suggestion,
+            "reps": counter,
+            "confidence": round(prob, 2),
+            "pose": last_pred,
+            "suggestion": last_suggestion,
             "frames_processed": frames_processed,
-            "status":           "done"
+            "duration": round(dur_hours, 6),
+            "duration_seconds": round(dur_secs, 2),
+            "status": "done"
         }
 
     except Exception:
