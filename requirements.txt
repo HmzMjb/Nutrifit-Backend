@@ -14,8 +14,8 @@ joblib==1.5.2
 xgboost==3.1.2
 scipy==1.16.3
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.1.0+cpu
-torchvision==0.16.0+cpu
+torch==2.9.1+cpu
+torchvision==0.24.1+cpu
 pillow==12.0.0
 mediapipe==0.10.21
 gunicorn==23.0.0
