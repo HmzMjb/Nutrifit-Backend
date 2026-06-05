@@ -1,2 +1,9 @@
 [phases.setup]
-nixPkgs = ["libGL", "libglib2.0", "mesa-libGL"]
+nixPkgs = ["libglib2.0"]
+
+[phases.install]
+cmds = [
+  "pip install -r requirements.txt",
+  "pip uninstall -y opencv-python opencv-contrib-python || true",
+  "pip install opencv-python-headless"
+]
