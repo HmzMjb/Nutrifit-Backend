@@ -1,9 +1,9 @@
 [phases.setup]
-nixPkgs = ["libglib2.0"]
+nixPkgs = ["libGL", "libglib2.0"]
 
 [phases.install]
 cmds = [
   "pip install -r requirements.txt",
-  "pip uninstall -y opencv-python opencv-contrib-python || true",
-  "pip install opencv-python-headless"
+  "pip uninstall -y opencv-contrib-python opencv-python || true",
+  "pip install opencv-python-headless==4.11.0.86 --force-reinstall"
 ]
