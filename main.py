@@ -5,9 +5,8 @@ load_dotenv()
 from chatbot import chatbot
 from cheatmeal import cheatmeal_route
 from exercise_plan import exercise_plan_route
-from exercise_video import process_video
+
 from gamification import gamification_sync_route
-from meal_snap import estimate_from_image_bytes
 from datetime import datetime
 from profile_setup import profile_setup_route, profile_validate
 
@@ -46,6 +45,7 @@ def handle_profile_setup_endpoint():
 
 @app.route("/meal_snap", methods=["POST"])
 def predict():
+    from meal_snap import estimate_from_image_bytes
     file = request.files.get("meal_image")
     if file is None:
         return jsonify({"error": "No file provided"}), 400
@@ -121,7 +121,8 @@ def exercise_plan_endpoint():
 
 @app.route("/exercise_video", methods=["POST"])
 def handle_exercise_video_endpoint():
-     try:
+    from exercise_video import process_video
+    try:
          file = request.files.get("video")
          print(request.files)
 
@@ -149,8 +150,8 @@ def handle_exercise_video_endpoint():
 
          return jsonify(result), 200
 
-     except Exception as e:
-         return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 @app.route("/chatbot", methods=["POST"])
 def chatbot_endpoint():
     data = request.get_json()
