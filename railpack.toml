@@ -1,5 +1,5 @@
 [phases.setup]
-aptPkgs = ["libgl1", "libglib2.0-0t64"]
+aptPkgs = ["libgl1", "libglib2.0-0t64", "libgles2"]
 
 [phases.build]
 cmds = ["pip install -r requirements.txt"]
