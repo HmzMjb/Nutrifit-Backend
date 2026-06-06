@@ -19,7 +19,6 @@ torch==2.9.1+cpu
 torchvision==0.24.1+cpu
 pillow==12.0.0
 opencv-python-headless==4.11.0.86
-opencv-contrib-python-headless==4.11.0.86
-mediapipe==0.10.21
+mediapipe==0.10.21; sys_platform != "linux"
 gunicorn==23.0.0
 google-generativeai
