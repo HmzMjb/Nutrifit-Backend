@@ -41,9 +41,9 @@ warnings.filterwarnings("ignore", category=UserWarning)
 # ─────────────────────────────────────────────
 #  Paths  (edit to match your environment)
 # ─────────────────────────────────────────────
-BASE_CSV_DIR = r"D:\Nutrifit Backend"
+BASE_CSV_DIR = os.path.dirname(os.path.abspath(__file__))
 FOOD_CSV_PATH = os.path.join(BASE_CSV_DIR, "foods4.csv")
-IMAGES_DIR = Path(r"D:\Nutrifit Backend\Food Images")
+IMAGES_DIR = Path(BASE_CSV_DIR) / "Food Images"
 
 # ─────────────────────────────────────────────
 #  Tuneable constants
