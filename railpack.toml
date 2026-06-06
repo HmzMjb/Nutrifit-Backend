@@ -2,7 +2,7 @@
 aptPkgs = ["libgl1", "libglib2.0-0t64"]
 
 [phases.build]
-cmds = ["apt-get update && apt-get install -y libgl1 libglib2.0-0t64 || true", "pip install -r requirements.txt"]
+cmds = ["pip install -r requirements.txt"]
 
-[deploy]
-aptPkgs = ["libgl1", "libglib2.0-0t64"]
+[variables]
+OPENCV_IO_ENABLE_OPENEXR = "1"
