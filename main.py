@@ -14,6 +14,9 @@ from meal_plan import generate_meal_plan_route
 from track_progress import TrackProgress
 
 app = Flask(__name__)
+import threading
+from meal_snap import get_model
+threading.Thread(target=get_model, daemon=True).start()
 CORS(app)
 
 
