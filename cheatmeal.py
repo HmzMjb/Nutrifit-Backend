@@ -4,7 +4,7 @@ import warnings
 import numpy as np
 import pandas as pd
 import matplotlib
-matplotlib.use("Agg")
+#matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -107,6 +107,13 @@ GOAL_TIP = {
     Goal.MAINTENANCE : "Stay close to your macros. One extra workout handles the rest.",
 }
 
+print("✅ Enums and config ready.")
+print(f"   Goals      : {[g.value for g in Goal]}")
+print(f"   Strategies : {[s.value for s in StrategyType]}")
+print(f"   Safety floor    : {MIN_DAILY_CALORIES} kcal/day")
+print(f"   Max daily cut   : {int(MAX_REDUCTION_PCT*100)}%")
+print(f"   Cheat threshold : {int(CHEAT_THRESHOLD_PCT*100)}% over target")
+print(f"   Max workout/day : {MAX_WORKOUT_MIN_DAY} min")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -161,7 +168,20 @@ class UserProfile:
             self.daily_fat_g     = round((self.daily_calories * cfg["fat_pct"])     / 9, 1)
 
     def display(self):
-        pass
+        print(f'\n{"="*52}')
+        print(f"  👤 {self.name} ({self.user_id})")
+        print(f'{"="*52}')
+        print(f"  Age / Gender    : {self.age} / {self.gender}")
+        print(f"  Weight / Height : {self.weight_kg}kg / {self.height_cm}cm")
+        print(f"  Goal            : {self.goal.value}")
+        print(f"  Activity Level  : {self.activity_level.name}")
+        print(f"  Cheat Frequency : {self.cheat_frequency}x / week")
+        print(f"  {'─'*47}")
+        print(f"  BMR             : {self.bmr:.0f} kcal")
+        print(f"  TDEE            : {self.tdee:.0f} kcal")
+        print(f"  Daily Target    : {self.daily_calories:.0f} kcal")
+        print(f"  Macros P/C/F    : {self.daily_protein_g}g / {self.daily_carbs_g}g / {self.daily_fat_g}g")
+        print(f'{"="*52}')
 
 
 @dataclass
@@ -198,8 +218,15 @@ class DayLog:
         return sum(m.fat_g for m in self.meals)
 
     def display(self):
+        print(f"\n  📋 Day Log — {self.date}")
+        print(f'  {"─"*40}')
         for m in self.meals:
-            pass
+            print(f"  {m.meal_type.value.capitalize():<12}: {m.calories:.0f} kcal  "
+                  f"| P:{m.protein_g}g  C:{m.carbs_g}g  F:{m.fat_g}g"
+                  + (f"  [{m.food_desc}]" if m.food_desc else ""))
+        print(f'  {"─"*40}')
+        print(f"  TOTAL        : {self.total_calories:.0f} kcal  "
+              f"| P:{self.total_protein:.0f}g  C:{self.total_carbs:.0f}g  F:{self.total_fat:.0f}g")
 
 
 @dataclass
@@ -244,16 +271,46 @@ class CompensationPlan:
     def summary(self):
         """Full tabular plan — identical to original notebook output."""
         sev_icon = {"mild": "🟡", "moderate": "🟠", "severe": "🔴"}
+        print(f'\n{"="*68}')
+        print("  🏋️  PERSONALIZED COMPENSATION PLAN")
+        print(f'{"="*68}')
+        print(f"  User        : {self.user_name} ({self.user_id})")
+        print(f"  Goal        : {self.goal.value}")
+        print(f"  Cheat Date  : {self.cheat_date}")
+        print(f"  Surplus     : {self.calorie_surplus:.0f} kcal  "
+              f"{sev_icon.get(self.severity,'')} {self.severity.upper()}")
+        print(f"  Strategy    : {self.strategy_used.value}  "
+              f"(ML confidence: {self.ml_confidence*100:.1f}%)")
+        print(f"  Window      : {self.window_days} day(s)  <- dynamically calculated")
         if self.warnings:
+            print("\n  ⚠️  Warnings:")
             for w in self.warnings:
-                pass
+                print(f"     * {w}")
+        print(f'\n  {"─"*68}')
+        print(f'  {"Date":<13} {"Meal":<12} {"Cal":>6} {"Prot":>7} {"Carbs":>7} {"Fat":>6}')
+        print(f'  {"─"*68}')
         for day in self.days:
             for i, meal in enumerate(day.meals):
                 d_str = day.date.isoformat() if i == 0 else ""
+                print(f"  {d_str:<13} {meal.meal_type.value:<12}"
+                      f" {meal.adjusted_calories:>6.0f}"
+                      f" {meal.protein_g:>6.1f}g"
+                      f" {meal.carbs_g:>6.1f}g"
+                      f" {meal.fat_g:>5.1f}g")
+            print(f'  {"":13} {"-- TOTAL --":<12}'
+                  f" {day.total_calories:>6.0f}  <- {day.day_note}")
             if day.extra_workout_min > 0:
                 kcal_burn = day.extra_workout_min * BURN_RATE_KCAL_MIN
+                print(f'  {"":13} {"🏃 EXERCISE":<12}'
+                      f" +{day.extra_workout_min} min cardio  (~{kcal_burn:.0f} kcal burned)")
+            print(f'  {"─"*68}')
+        print()
 
 
+print("✅ Models defined.")
+print("   UserProfile      → auto-computes BMR, TDEE, macros")
+print("   DayLog           → total_calories / protein / carbs / fat")
+print("   CompensationPlan → .summary() prints full tabular plan")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -310,6 +367,10 @@ df["goal_enc"]     = le_goal.transform(df["goal"])
 df["activity_enc"] = le_activity.transform(df["activity"])
 df["label_enc"]    = le_label.transform(df["label"])
 
+print("✅ Training data ready.")
+print(f"   Samples : {N_SAMPLES}")
+print("   Strategy distribution:")
+print(df["label"].value_counts().to_string())
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -344,6 +405,14 @@ y_pred = rf.predict(X_test_s)
 acc    = accuracy_score(y_test, y_pred)
 cv     = cross_val_score(rf, X_train_s, y_train, cv=5, scoring="accuracy")
 
+print("=" * 52)
+print("  🤖 RANDOM FOREST — RESULTS")
+print("=" * 52)
+print(f"  Test Accuracy  : {acc*100:.2f}%")
+print(f"  5-Fold CV Mean : {cv.mean()*100:.2f}%")
+print(f"  5-Fold CV Std  : +-{cv.std()*100:.2f}%")
+print()
+print(classification_report(y_test, y_pred, target_names=le_label.classes_))
 
 # ML metrics chart saved to disk (no plt.show on a server)
 fig, axes = plt.subplots(1, 2, figsize=(16, 6))
@@ -364,6 +433,7 @@ axes[1].set_xlabel("Importance Score")
 plt.tight_layout()
 plt.savefig("ml_metrics.png", dpi=150, bbox_inches="tight")
 plt.close()
+print("✅ ML metrics chart saved → ml_metrics.png")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -565,6 +635,11 @@ STRATEGY_REGISTRY = {
     StrategyType.HYBRID            : HybridStrategy,
 }
 
+print("✅ All 5 strategies defined and registered.")
+for st, cls in STRATEGY_REGISTRY.items():
+    print(f"   {st.value:<22} -> {cls.__name__}")
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 #  SECTION 7 — print_meal_compensation_plan  (identical to original — restored)
 # ══════════════════════════════════════════════════════════════════════════════
@@ -584,47 +659,86 @@ def print_meal_compensation_plan(plan: CompensationPlan, profile: UserProfile):
     SEP  = "=" * 62
     SEP2 = "-" * 62
 
+    print()
+    print(SEP)
+    print("  🍽️  MEAL COMPENSATION PLAN")
+    print(SEP)
+    print(f"  User     : {plan.user_name}  ({plan.user_id})")
+    print(f"  Goal     : {plan.goal.value}")
+    print(f"  Surplus  : {plan.calorie_surplus:.0f} kcal  "
+          f"{sev_icon.get(plan.severity, '')} {plan.severity.upper()}")
+    print(f"  Strategy : {plan.strategy_used.value}  "
+          f"(ML confidence: {plan.ml_confidence*100:.1f}%)")
+    print(f"  Window   : {plan.window_days} compensation day(s)")
+    print(f"  Tip      : {GOAL_TIP.get(plan.goal, '')}")
 
     if plan.warnings:
+        print()
         for w in plan.warnings:
-            pass
+            print(f"  ⚠️  {w}")
 
     cumulative = 0.0
 
     for day_idx, day in enumerate(plan.days, start=1):
+        print()
+        print(SEP2)
         label = day.date.strftime("%A, %d %B %Y")
+        print(f"  📅 DAY {day_idx} of {plan.window_days}  —  {label}")
+        print(SEP2)
 
         for meal in day.meals:
             icon  = meal_icon.get(meal.meal_type, " ")
             mname = meal.meal_type.value.upper()
+            print(f"  {icon} {mname}")
             if meal.adjusted_calories == 0:
-                pass
+                print("     Fasting — skip this meal (16:8 protocol)")
             else:
+                print(f"     Calories : {meal.adjusted_calories:.0f} kcal")
+                print(f"     Protein  : {meal.protein_g:.1f} g")
+                print(f"     Carbs    : {meal.carbs_g:.1f} g")
+                print(f"     Fat      : {meal.fat_g:.1f} g")
                 if meal.note:
-                    pass
+                    print(f"     Note     : {meal.note}")
+            print()
 
+        print("  " + "-" * 38)
+        print(f"  📊 DAILY TOTAL    : {day.total_calories:.0f} kcal")
+        print(f"     Daily Target   : {profile.daily_calories:.0f} kcal")
 
         food_deficit = max(0.0, profile.daily_calories - day.total_calories)
         if food_deficit > 0:
-            pass
+            print(f"     Food Deficit   : -{food_deficit:.0f} kcal")
 
         workout_recovery = 0.0
         if day.extra_workout_min > 0:
             kcal_burn        = day.extra_workout_min * BURN_RATE_KCAL_MIN
             workout_recovery = kcal_burn
+            print(f"  🏃 EXERCISE       : +{day.extra_workout_min} min cardio")
+            print(f"     Est. Burned    : ~{kcal_burn:.0f} kcal")
 
         day_recovery = food_deficit + workout_recovery
         cumulative  += day_recovery
         pct          = min(100.0, (cumulative / plan.calorie_surplus) * 100)
         filled       = int(pct / 5)
         bar          = "X" * filled + "." * (20 - filled)
+        print(f"  📈 RECOVERY       : {cumulative:.0f} / {plan.calorie_surplus:.0f} kcal  "
+              f"({pct:.1f}%)")
+        print(f"     [{bar}]")
 
+    print()
+    print(SEP)
     if cumulative >= plan.calorie_surplus * 0.95:
-        pass
+        print(f"  ✅ Surplus fully compensated in {plan.window_days} day(s)!")
     else:
         shortfall = plan.calorie_surplus - cumulative
+        print(f"  ⚠️  Partial recovery. ~{shortfall:.0f} kcal still remaining.")
+        print("     Consider one extra light walk or an additional day.")
+    print(SEP)
+    print()
 
 
+print("✅ print_meal_compensation_plan() ready.")
+print("   Usage: print_meal_compensation_plan(plan, user)")
 # ✅ Calculate total calories from all meals
 
 
@@ -747,6 +861,7 @@ class CompensationPlannerService:
         plt.tight_layout()
         plt.savefig("compensation_plan.png", dpi=150, bbox_inches="tight")
         plt.close()
+        print("  📊 Chart saved → compensation_plan.png")
 
     def process(
         self,
@@ -762,19 +877,29 @@ class CompensationPlannerService:
         """
         if not self._is_cheat_day(eaten_calories, profile):
             pct = (eaten_calories / profile.daily_calories - 1) * 100
+            print(f"  ✅ Normal day (+{pct:.1f}% over target). No compensation needed.")
             return None, 0.0, "none"
 
         surplus = self._calculate_surplus(eaten_calories, profile)
+        print(f"\n  🍕 Cheat day detected!")
+        print(f"     Ate      : {eaten_calories:.0f} kcal")
+        print(f"     Target   : {profile.daily_calories:.0f} kcal")
+        print(f"     Surplus  : {surplus:.0f} kcal  "
+              f"[{_classify_severity(surplus, profile).upper()}]")
 
         if override_strategy:
             strategy, confidence = override_strategy, 1.0
+            print(f"     Strategy : {strategy.value}  [manual override]")
         else:
             strategy, confidence = self._predict_strategy(profile, surplus)
+            print(f"     Strategy : {strategy.value}  "
+                  f"(ML confidence: {confidence*100:.1f}%)")
 
         plan               = STRATEGY_REGISTRY[strategy]().build_plan(
             profile, cheat_date, surplus, strategy
         )
         plan.ml_confidence = confidence
+        print(f"     Window   : {plan.window_days} day(s)  <- auto-calculated from surplus")
 
         if visualize:
             self._visualize(plan, profile, eaten_calories)
@@ -789,6 +914,7 @@ planner = CompensationPlannerService(
     le_activity = le_activity,
     le_label    = le_label,
 )
+print("✅ CompensationPlannerService ready!")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
