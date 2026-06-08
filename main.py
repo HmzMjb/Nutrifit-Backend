@@ -142,14 +142,16 @@ def handle_exercise_video_endpoint():
          print(f"Exercise: {exercise} → Model: {model_path}")
 #         # ──────────────────────────────────────────────────────────
 
-         import os
-         os.makedirs("videos", exist_ok=True)
+         import tempfile, os
 
-         video_path = os.path.join("videos", file.filename)
-         file.save(video_path)
-         print("Saved:", video_path)
+         with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as tmp:
+             file.save(tmp.name)
+             tmp_path = tmp.name
 
-         result = process_video(video_path, model_path=model_path)
+         try:
+             result = process_video(tmp_path, model_path=model_path)
+         finally:
+             os.remove(tmp_path)
 
          return jsonify(result), 200
 
