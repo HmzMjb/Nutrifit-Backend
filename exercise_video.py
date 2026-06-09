@@ -661,7 +661,6 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                 try:
                     # Mirror the frame for consistent orientation with training data
 
-                    image = cv2.flip(image, 1)
                     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                     results   = pose.process(image_rgb)
 
