@@ -660,7 +660,8 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
 
                 try:
                     # Mirror the frame for consistent orientation with training data
-                    image     = cv2.flip(image, 1)
+
+                    image = cv2.flip(image, 1)
                     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                     results   = pose.process(image_rgb)
 
@@ -715,7 +716,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
         dur_secs = (total_frames / fps) if fps > 0 else 0.0
         dur_hours = dur_secs / 3600.0
         cap.release()
-
+        print(f"[DEBUG] frames_processed={frames_processed}, counter={counter}, last_pred={last_pred}, prob={prob}")
         return {
             "reps": counter,
             "confidence": round(prob, 2),
