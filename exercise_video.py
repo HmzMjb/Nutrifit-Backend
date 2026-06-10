@@ -37,8 +37,8 @@ mp_pose    = mp.solutions.pose
 PL         = mp_pose.PoseLandmark   # convenient alias
 
 # ── Confidence thresholds (IMPROVED from Model_Predictions.py) ────────────────
-PROB_THRESHOLD = 0.70   # model must be ≥70% confident before acting (was 0.3)
-BUFFER_SIZE    = 5      # consecutive frames needed to confirm a stage change
+PROB_THRESHOLD = 0.60   # model must be ≥70% confident before acting (was 0.3)
+BUFFER_SIZE    = 3    # consecutive frames needed to confirm a stage change
 VIS_THRESHOLD  = 0.5    # landmark visibility needed for angle calculations
 
 
