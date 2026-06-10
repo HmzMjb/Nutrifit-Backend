@@ -37,8 +37,8 @@ mp_pose    = mp.solutions.pose
 PL         = mp_pose.PoseLandmark   # convenient alias
 
 # ── Confidence thresholds (IMPROVED from Model_Predictions.py) ────────────────
-PROB_THRESHOLD = 0.60   # model must be ≥70% confident before acting (was 0.3)
-BUFFER_SIZE    = 3    # consecutive frames needed to confirm a stage change
+PROB_THRESHOLD = 0.70   # model must be ≥70% confident before acting (was 0.3)
+BUFFER_SIZE    = 5      # consecutive frames needed to confirm a stage change
 VIS_THRESHOLD  = 0.5    # landmark visibility needed for angle calculations
 
 
@@ -334,14 +334,11 @@ def labeling_video(path_video, labels, path_CSV, bench=False):
     with mp_pose.Pose(min_detection_confidence=0.5,
                       min_tracking_confidence=0.5) as pose:
 
-        frame_index = 0
         while cap.isOpened():
             ret, image = cap.read()
             if not ret:
+                print('End of video or camera error.')
                 break
-            frame_index += 1
-            if frame_index % 5 != 0:  # har 5th frame
-                continue
 
             # BGR → RGB for MediaPipe
             image.flags.writeable = False
@@ -499,14 +496,10 @@ def Make_Predictions(path_model, ups, downs, webcam=0):
     with mp_pose.Pose(min_detection_confidence=0.5,
                       min_tracking_confidence=0.5) as pose:
 
-        frame_index = 0
         while cap.isOpened():
             ret, image = cap.read()
             if not ret:
                 break
-            frame_index += 1
-            if frame_index % 5 != 0:  # har 5th frame
-                continue
 
             # Mirror for a natural mirror-like view
             image = cv2.flip(image, 1)
