@@ -334,11 +334,14 @@ def labeling_video(path_video, labels, path_CSV, bench=False):
     with mp_pose.Pose(min_detection_confidence=0.5,
                       min_tracking_confidence=0.5) as pose:
 
+        frame_index = 0
         while cap.isOpened():
             ret, image = cap.read()
             if not ret:
-                print('End of video or camera error.')
                 break
+            frame_index += 1
+            if frame_index % 5 != 0:  # har 5th frame
+                continue
 
             # BGR → RGB for MediaPipe
             image.flags.writeable = False
@@ -496,10 +499,14 @@ def Make_Predictions(path_model, ups, downs, webcam=0):
     with mp_pose.Pose(min_detection_confidence=0.5,
                       min_tracking_confidence=0.5) as pose:
 
+        frame_index = 0
         while cap.isOpened():
             ret, image = cap.read()
             if not ret:
                 break
+            frame_index += 1
+            if frame_index % 5 != 0:  # har 5th frame
+                continue
 
             # Mirror for a natural mirror-like view
             image = cv2.flip(image, 1)
