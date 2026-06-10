@@ -5,7 +5,7 @@ load_dotenv()
 from chatbot import chatbot
 from cheatmeal import cheatmeal_route
 from exercise_plan import exercise_plan_route
-
+import os
 from gamification import gamification_sync_route
 from datetime import datetime
 from profile_setup import profile_setup_route, profile_validate
@@ -149,7 +149,9 @@ def handle_exercise_video_endpoint():
              tmp_path = tmp.name
 
          try:
+             print(f"[DEBUG] tmp_path={tmp_path}, exists={os.path.exists(tmp_path)}, size={os.path.getsize(tmp_path)}")
              result = process_video(tmp_path, model_path=model_path)
+             print(result)
          finally:
              os.remove(tmp_path)
 
