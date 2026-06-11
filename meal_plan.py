@@ -140,7 +140,7 @@ class ProfessionalMealPlanner:
             self,
             foods_csv: str = "foods4.csv",
             profiles_csv: str = "pakistan_user_profiles.csv",
-            model_path: str = "models/calorie_model.pkl"
+            model_path: str = "Models/calorie_model.pkl"
     ):
         """Initialize the meal planner with food database and ML model"""
         self.food_df = self._load_food_data(foods_csv)
@@ -198,7 +198,7 @@ class ProfessionalMealPlanner:
         pipeline.fit(X, y)
 
         # Save model
-        os.makedirs("models", exist_ok=True)
+        os.makedirs("Models", exist_ok=True)
         joblib.dump(pipeline, model_path)
         print(f"Model trained and saved to {model_path}")
 
@@ -458,7 +458,7 @@ def generate_meal_plan_route(user_data: dict):
     planner = ProfessionalMealPlanner(
         foods_csv="foods4.csv",
         profiles_csv="pakistan_user_profiles.csv",
-        model_path="models/calorie_model.pkl"
+        model_path="Models/calorie_model.pkl"
     )
 
     try:
