@@ -325,44 +325,23 @@ class profile_setup:
 def profile_validate():
     data = request.get_json() or {}
 
-    profile = profile_setup(data)
+    errors, warnings, result = profile_setup(data).run()
 
-    profile.validate_required_fields()
-    profile.parse_numeric_fields()
-
-    if profile.errors:
+    if errors:
         return jsonify({
             "status": "error",
-            "errors": profile.errors,
-            "warnings": profile.warnings
+            "errors": errors,
+            "warnings": warnings,
+            "suggested_target_weight": result.get("suggested_target_weight"),
+            "target_weight_range": result.get("target_weight_range")
         }), 400
-
-    profile.calculate_metrics()
-    profile.validate_goal()
-    profile.process_timeline()
-    profile.calculate_healthy_weights()
-
-    if data.get("targetWeight"):
-        profile.validate_timeline_against_goal()
-        profile.validate_target_weight()
 
     return jsonify({
         "status": "success",
         "errors": {},
-        "warnings": profile.warnings,
-        "bmi": round(profile.bmi, 2),
-        "bmr": round(profile.bmr, 2),
-        "tdee": round(profile.tdee, 2),
-        "calories_burned": round(profile.calories_burned, 2),
-        "timeline_weeks": profile.timeline_weeks,
-        "suggested_goal": profile.suggested_goal,
-        "suggested_target_weight": (
-            round(profile.suggested_target_weight, 2)
-            if profile.suggested_target_weight
-            else None
-        )
-    })
-
+        "warnings": warnings,
+        **result
+    }), 200
 def profile_setup_route():
     data = request.get_json() or {}
     errors, warnings, result = profile_setup(data).run()
