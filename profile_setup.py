@@ -169,9 +169,14 @@ class profile_setup:
 
         except:
             self.errors["timeline"] = "Invalid date format (YYYY-MM-DD)"
+
     def calculate_healthy_weights(self):
-        self.min_healthy_weight = 18.5 * (self.height_m ** 2)
-        self.max_healthy_weight = 24.9 * (self.height_m ** 2)
+        if self.gender == "male":
+            self.min_healthy_weight = 20.0 * (self.height_m ** 2)
+            self.max_healthy_weight = 25.0 * (self.height_m ** 2)
+        else:  # female
+            self.min_healthy_weight = 18.5 * (self.height_m ** 2)
+            self.max_healthy_weight = 24.0 * (self.height_m ** 2)
         if self.timeline_weeks:
             self.max_safe_loss = self.SAFE_LOSS_PER_WEEK * self.timeline_weeks
             self.max_safe_gain = self.SAFE_GAIN_PER_WEEK * self.timeline_weeks
