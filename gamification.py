@@ -87,27 +87,47 @@ def gamification_sync_route(data: dict):
     try:
         xp = int(data.get("xp", 0))
         streak = int(data.get("streak", 0))
-        eaten_foods = int(data.get("eaten_foods", 0))
-        achievements = data.get("achievements", [])
+        matched_foods = int(data.get("matched_foods", 0))
+        unmatched_foods = int(data.get("unmatched_foods", 0))
+        last_synced_matched = int(data.get("last_synced_matched", 0))
+        last_synced_unmatched = int(data.get("last_synced_unmatched", 0))
 
+        exercise_minutes = float(data.get("exercise_minutes", 0))
+        last_synced_exercise_minutes = float(data.get("last_synced_exercise_minutes", 0))
+
+        achievements = data.get("achievements", [])
         last_active_date = data.get("last_active_date")
+
+            # Streak update
         streak, updated_last_date = update_streak(streak, last_active_date)
 
-        bonus_xp = eaten_foods * 15
-        total_xp = xp + bonus_xp
-        print('XP',total_xp)
+        XP_PER_MATCHED = 15
+        XP_PENALTY_PER_UNMATCHED = 5
+        XP_PER_EXERCISE_MINUTE = 10
 
+        new_matched = max(matched_foods - last_synced_matched, 0)
+        new_unmatched = max(unmatched_foods - last_synced_unmatched, 0)
+        new_exercise_minutes = max(exercise_minutes - last_synced_exercise_minutes, 0)
+
+        bonus_xp = new_matched * XP_PER_MATCHED
+        penalty_xp = new_unmatched * XP_PENALTY_PER_UNMATCHED
+        exercise_xp = int(new_exercise_minutes * XP_PER_EXERCISE_MINUTE)
+
+        total_xp = max(xp + bonus_xp - penalty_xp + exercise_xp, 0)
+        print('XP', total_xp)
         server_level, level_progress = calculate_level_data(total_xp)
 
         # 🏆 Unlock achievements
-        new_achievements = unlock_achievements(server_level, streak, eaten_foods, achievements)
+        eaten_foods_total = matched_foods + unmatched_foods
+        new_achievements = unlock_achievements(server_level, streak, eaten_foods_total, achievements)
         all_achievements = achievements.copy()
 
         for badge in new_achievements:
             if badge not in all_achievements:
                 all_achievements.append(badge)
+
         current_badge = get_level_badge(server_level)
-        print('Badge',current_badge)
+        print('Badge', current_badge)
 
         return {
             "status": "success",
@@ -120,7 +140,9 @@ def gamification_sync_route(data: dict):
             "all_achievements": all_achievements,
             "timestamp": datetime.now(UTC).isoformat(),
             "current_badge": current_badge,
-
+            "last_synced_matched": matched_foods,
+            "last_synced_unmatched": unmatched_foods,
+            "last_synced_exercise_minutes": exercise_minutes,
         }
 
     except Exception as e:
