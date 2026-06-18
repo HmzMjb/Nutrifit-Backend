@@ -84,20 +84,38 @@ class exercise_plan:
         user_hash = int(hashlib.md5(str(user_profile).encode()).hexdigest(), 16) % (2**32)
         filtered_ex = filtered_ex.sample(frac=1, random_state=user_hash).reset_index(drop=True)
 
-        # Split exercises across days
-        exercises_per_day = max(3, len(filtered_ex) // days)
+        # Mandatory exercises har din
+        mandatory_names = ['Bench Press', 'Squats', 'Deadlift']
+        mandatory_df = self.exercise_df[
+            self.exercise_df['exercise_name'].isin(mandatory_names)
+        ].copy()
+
+        mandatory_df[['sets', 'repetitions', 'duration']] = mandatory_df.apply(
+            lambda row: self.adjust_exercise(row, activity, goal, timeline), axis=1
+        )
+
+        mandatory_records = mandatory_df[['exercise_name', 'sets', 'repetitions', 'duration']].to_dict(orient='records')
+
+        # Filtered list se mandatory exercises hata do
+        filtered_ex = filtered_ex[~filtered_ex['exercise_name'].isin(mandatory_names)].reset_index(drop=True)
+
+        # Har din 2 normal exercises (1 mandatory + 2 normal = 3 total)
+        exercises_per_day = 2
         daily_plan = {}
         for day in range(1, days + 1):
             start_idx = (day - 1) * exercises_per_day
             end_idx = start_idx + exercises_per_day
             day_ex = filtered_ex.iloc[start_idx:end_idx]
-            if len(day_ex) < 3:
-                day_ex = filtered_ex.iloc[:3]
 
-            daily_plan[f'Day {day}'] = day_ex[['exercise_name', 'sets', 'repetitions', 'duration']].to_dict(
-                orient='records'
-            )
+            # Agar exercises khatam ho jayein to wapas start se lo
+            if len(day_ex) < exercises_per_day:
+                day_ex = filtered_ex.iloc[:exercises_per_day]
+            one_mandatory = mandatory_records[(day - 1) % len(mandatory_records)]
 
+            day_records = [one_mandatory] + day_ex[['exercise_name', 'sets', 'repetitions', 'duration']].to_dict(
+                orient='records')
+
+            daily_plan[f'Day {day}'] = day_records
         return daily_plan
 
 
