@@ -35,6 +35,7 @@ class TrackProgress:
         self.today = datetime.today()
         self.days_in_month = calendar.monthrange(self.today.year, self.today.month)[1]
         self.exercise_videos = data.get("exercise_videos", [])
+        self.exercise_plan = data.get("exercise_plan", {})
 
         profile_updated_at = data.get("profile_updated_at")
         try:
@@ -661,6 +662,123 @@ class TrackProgress:
             **macro_pcts,
         })
 
+    def exercise_progress(self):
+        """
+        Exercise plan ke planned reps vs exercise_videos mein done reps compare karo.
+        Period ke hisaab se filter hota hai.
+        """
+        today = self.today
+        plan_raw = self.exercise_plan.get("plan", {})
+        day_keys = sorted(plan_raw.keys())  # ["Day 1", "Day 2", ...]
+
+        DAYS_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+        def _get_period_dates():
+            if self.period == "daily":
+                return today.date(), today.date()
+            elif self.period == "weekly":
+                week_start = today - timedelta(days=today.weekday())
+                return week_start.date(), (week_start + timedelta(days=6)).date()
+            else:  # monthly
+                from datetime import date
+                return today.replace(day=1).date(), today.date()
+
+        start_date, end_date = _get_period_dates()
+
+        # Exercise videos ko period ke andar filter karo
+        period_videos = []
+        for v in self.exercise_videos:
+            created_at = v.get("createdAt")
+            if not created_at:
+                continue
+            try:
+                dt = self._parse_date(created_at)
+                if start_date <= dt.date() <= end_date:
+                    period_videos.append({
+                        "exercise": v.get("exercise", "").lower().strip(),
+                        "reps": float(v.get("reps", 0)),
+                        "sets": float(v.get("sets", 0)),
+                        "duration": float(v.get("duration", 0)),
+                        "date": dt.date(),
+                        "day_index": dt.weekday(),
+                    })
+            except Exception:
+                continue
+
+        # Daily: sirf aaj ka plan ka day
+        # Weekly/Monthly: har din ka plan use karo (Day 1=Mon, Day 2=Tue...)
+        total_planned_reps = 0.0
+        total_done_reps = 0.0
+        total_planned_sets = 0.0
+        total_done_sets = 0.0
+        total_planned_exercises = 0
+        total_done_exercises = 0
+
+        # Plan mein exercise name ko normalize karke match karo
+        def _name_match(plan_name: str, video_exercise: str) -> bool:
+            plan_norm = plan_name.lower().strip()
+            # video mein short name hota hai: "bench", "squat", "deadlift"
+            # plan mein full name: "Bench Press", "Squats", "Deadlift"
+            keywords = {
+                "bench": "bench",
+                "squat": "squat",
+                "deadlift": "deadlift",
+            }
+            for short, keyword in keywords.items():
+                if keyword in plan_norm and short in video_exercise:
+                    return True
+                if keyword in video_exercise and short in plan_norm:
+                    return True
+            # fallback: partial match
+            return video_exercise in plan_norm or plan_norm in video_exercise
+
+        per_exercise_progress = []
+        for day_idx, day_key in enumerate(day_keys):
+            exercises = plan_raw.get(day_key, [])
+
+            # Filter videos for this day
+            if self.period == "daily":
+                if day_idx != today.weekday():
+                    continue
+                day_videos = [v for v in period_videos]
+            else:
+                day_videos = [v for v in period_videos if v["day_index"] == day_idx]
+
+            for ex in exercises:
+                ex_name = ex.get("exercise_name", "")
+                planned_reps = float(ex.get("repetitions", 0))
+                planned_sets = float(ex.get("sets", 0))
+                total_planned_sets += planned_sets
+                total_planned_reps += planned_reps
+                total_planned_exercises += 1
+
+                # Match karo
+                matched = [v for v in day_videos if _name_match(ex_name, v["exercise"])]
+                if matched:
+                    total_done_exercises += 1
+                    done_reps = sum(v["reps"] for v in matched)
+                    total_done_reps += min(done_reps, planned_reps)
+                    done_sets = sum(v["sets"] for v in matched)
+                    total_done_sets += min(done_sets, planned_sets)
+
+
+        # Percentage calculate karo
+        if total_planned_reps > 0:
+            exercise_pct = round((total_done_reps / (total_planned_reps * total_planned_sets) * 100), 2)
+        elif total_planned_exercises > 0:
+            exercise_pct = round((total_done_exercises / total_planned_exercises) * 100, 2)
+        else:
+            exercise_pct = 0.0
+
+        return {
+            "exerciseProgressPercentage": min(exercise_pct, 100.0),
+            "completedExercises": total_done_exercises,
+            "totalPlannedExercises": total_planned_exercises,
+            "totalDoneReps": round(total_done_reps, 1),
+            "totalPlannedReps": round(total_planned_reps, 1),
+            "totalPlannedSets": round(total_planned_sets, 1),
+            "perExercise": per_exercise_progress,
+        }
     # --------------------------------------------------
     # MAIN ENTRY
     # --------------------------------------------------
@@ -675,4 +793,5 @@ class TrackProgress:
 
         result["ongoingWeek"] = (self.today - self.profile_start_date).days // 7 + 1
         result["adaptivePlan"] = self.check_adaptive_plan()
+        result["exerciseProgress"] = self.exercise_progress()
         return clean_numpy(result)

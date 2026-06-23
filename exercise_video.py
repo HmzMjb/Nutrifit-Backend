@@ -77,6 +77,24 @@ EXERCISE_CONFIG = {
     },
 }
 
+
+def _get_exercise_config(model_path):
+    """
+    Returns the correct exercise config for the given model path.
+    Matches by keyword (Bench / Deadlift / Squat) so any path format works,
+    e.g. 'Models/Bench_rf.pkl', '/abs/path/Bench_rf.pkl', or 'bench'.
+    Falls back to Bench config if no keyword matches.
+    """
+    p = model_path.lower()
+    if "bench" in p:
+        return EXERCISE_CONFIG["Models/Bench_rf.pkl"]
+    elif "deadlift" in p:
+        return EXERCISE_CONFIG["Models/Deadlift_rf.pkl"]
+    elif "squat" in p:
+        return EXERCISE_CONFIG["Models/Squat_rf.pkl"]
+    # Exact key lookup as final fallback
+    return EXERCISE_CONFIG.get(model_path, EXERCISE_CONFIG["Models/Bench_rf.pkl"])
+
 # ── Bad-posture class → warning message map ────────────────────────────────────
 # If a predicted class is in this dict → bad posture (red skeleton + warning).
 # If NOT in this dict → good posture (green skeleton + "Good form!").
@@ -484,8 +502,9 @@ def Make_Predictions(path_model, ups, downs, webcam=0):
     with open(path_model, 'rb') as f:
         model = pickle.load(f)
 
-    is_bench     = "Bench" in path_model
-    feature_cols = LANDMARK_COLS_BENCH if is_bench else LANDMARK_COLS
+    config       = _get_exercise_config(path_model)
+    is_bench     = config["bench"]
+    feature_cols = LANDMARK_COLS
 
     cap           = cv2.VideoCapture(webcam)
     counter       = 0
@@ -619,12 +638,12 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
     import traceback
 
     try:
-        config   = EXERCISE_CONFIG.get(model_path, EXERCISE_CONFIG["Models/Bench_rf.pkl"])
+        config   = _get_exercise_config(model_path)
         ups      = config["ups"]
         downs    = config["downs"]
         is_bench = config["bench"]
 
-        feature_cols = LANDMARK_COLS_BENCH if is_bench else LANDMARK_COLS
+        feature_cols = LANDMARK_COLS
 
         with open(model_path, "rb") as f:
             model = pickle.load(f)
@@ -668,7 +687,8 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                         continue
 
                     lm_list  = results.pose_landmarks.landmark
-                    selected = list(lm_list)[:22] if is_bench else list(lm_list)
+
+                    selected = list(lm_list)
 
                     row = np.array([
                         [lm.x, lm.y, lm.z, lm.visibility]
@@ -681,6 +701,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
 
                     last_pred        = pred
                     frames_processed += 1
+                    print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}")
 
                     # ── Frame buffer: only count when BUFFER_SIZE frames agree ──
                     stage_buffer.append(pred)
