@@ -687,8 +687,9 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                 min_tracking_confidence=0.5
         ) as pose:
 
-            for image in frames:  # while loop ki jagah for loop
+            for image in frames:
                 try:
+                    image = cv2.flip(image, 1)
                     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                     results = pose.process(image_rgb)
 
