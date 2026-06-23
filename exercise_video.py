@@ -647,6 +647,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
 
         with open(model_path, "rb") as f:
             model = pickle.load(f)
+        print(f"[DEBUG] Model classes: {model.classes_}")
 
         cap = cv2.VideoCapture(video_path)
         if not cap.isOpened():
