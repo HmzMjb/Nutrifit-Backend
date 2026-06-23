@@ -37,7 +37,7 @@ mp_pose    = mp.solutions.pose
 PL         = mp_pose.PoseLandmark   # convenient alias
 
 # ── Confidence thresholds (IMPROVED from Model_Predictions.py) ────────────────
-PROB_THRESHOLD = 0.70   # model must be ≥70% confident before acting (was 0.3)
+PROB_THRESHOLD = 0.55  # model must be ≥70% confident before acting (was 0.3)
 BUFFER_SIZE    = 5      # consecutive frames needed to confirm a stage change
 VIS_THRESHOLD  = 0.5    # landmark visibility needed for angle calculations
 
@@ -520,13 +520,11 @@ def Make_Predictions(path_model, ups, downs, webcam=0):
             if not ret:
                 break
 
-            # Mirror for a natural mirror-like view
             image = cv2.flip(image, 1)
-
-            # BGR → RGB for MediaPipe
             image.flags.writeable = False
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             results = pose.process(image)
+
 
             # RGB → BGR for OpenCV display
             image.flags.writeable = True
@@ -690,7 +688,6 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
 
             for image in frames:
                 try:
-                    image = cv2.flip(image, 1)
                     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                     results = pose.process(image_rgb)
 
