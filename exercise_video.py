@@ -665,6 +665,8 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
         last_pred        = ""
         last_suggestion  = ""
         frames_processed = 0
+        frame_index      = 0
+        FRAME_STRIDE     = 2     # process every 2nd frame for speed on slow servers
 
         with mp_pose.Pose(
             min_detection_confidence=0.5,
@@ -676,12 +678,14 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                 if not ret:
                     break
 
+                frame_index += 1
+                if frame_index % FRAME_STRIDE != 0:
+                    continue
+
                 if image is None or image.size == 0:
                     continue
 
                 try:
-                    # Mirror the frame for consistent orientation with training data
-
                     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                     results   = pose.process(image_rgb)
 
@@ -703,7 +707,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
 
                     last_pred        = pred
                     frames_processed += 1
-                    print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}")
+                    print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}", flush=True)
 
                     # ── Frame buffer: only count when BUFFER_SIZE frames agree ──
                     stage_buffer.append(pred)
@@ -731,14 +735,14 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                         last_suggestion = suggestion
 
                 except Exception:
-                    print(f"[process_video] Skipped frame: {traceback.format_exc()}")
+                    print(f"[process_video] Skipped frame: {traceback.format_exc()}", flush=True)
                     continue
         fps = cap.get(cv2.CAP_PROP_FPS) or 0
         total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0
         dur_secs = (total_frames / fps) if fps > 0 else 0.0
         dur_hours = dur_secs / 3600.0
         cap.release()
-        print(f"[DEBUG] frames_processed={frames_processed}, counter={counter}, last_pred={last_pred}, prob={prob}")
+        print(f"[DEBUG] frames_processed={frames_processed}, counter={counter}, last_pred={last_pred}, prob={prob}", flush=True)
         return {
             "reps": counter,
             "confidence": round(prob, 2),
