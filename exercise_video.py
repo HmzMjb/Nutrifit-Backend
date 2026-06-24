@@ -39,7 +39,7 @@ mp_pose    = mp.solutions.pose
 PL         = mp_pose.PoseLandmark   # convenient alias
 
 # ── Confidence thresholds (IMPROVED from Model_Predictions.py) ────────────────
-PROB_THRESHOLD = 0.70   # model must be ≥70% confident before acting (was 0.3)
+PROB_THRESHOLD = 0.50   # model must be ≥50% confident before acting (was 0.70, lowered for cross-platform consistency)
 BUFFER_SIZE    = 5      # consecutive frames needed to confirm a stage change
 VIS_THRESHOLD  = 0.5    # landmark visibility needed for angle calculations
 
@@ -72,9 +72,9 @@ EXERCISE_CONFIG = {
         "bench": False,
     },
     "Models/Squat_rf.pkl": {
-        # KEY FIX: bad classes (down_deep, down_forward) removed.
+        # down_deep kept in downs — counts as a rep with posture warning via validate_posture()
         "ups":   ["up"],
-        "downs": ["down"],
+        "downs": ["down", "down_deep"],
         "bench": False,
     },
 }
@@ -703,7 +703,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
 
                     last_pred        = pred
                     frames_processed += 1
-                    print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}")
+                    print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}", flush=True)
 
                     # ── Frame buffer: only count when BUFFER_SIZE frames agree ──
                     stage_buffer.append(pred)
@@ -731,14 +731,14 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                         last_suggestion = suggestion
 
                 except Exception:
-                    print(f"[process_video] Skipped frame: {traceback.format_exc()}")
+                    print(f"[process_video] Skipped frame: {traceback.format_exc()}", flush=True)
                     continue
         fps = cap.get(cv2.CAP_PROP_FPS) or 0
         total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0
         dur_secs = (total_frames / fps) if fps > 0 else 0.0
         dur_hours = dur_secs / 3600.0
         cap.release()
-        print(f"[DEBUG] frames_processed={frames_processed}, counter={counter}, last_pred={last_pred}, prob={prob}")
+        print(f"[DEBUG] frames_processed={frames_processed}, counter={counter}, last_pred={last_pred}, prob={prob}", flush=True)
         return {
             "reps": counter,
             "confidence": round(prob, 2),
