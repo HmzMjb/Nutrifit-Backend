@@ -1,3 +1,5 @@
+#exercise_video.py pycharm
+
 import os
 import csv
 import time
@@ -37,7 +39,7 @@ mp_pose    = mp.solutions.pose
 PL         = mp_pose.PoseLandmark   # convenient alias
 
 # ── Confidence thresholds (IMPROVED from Model_Predictions.py) ────────────────
-PROB_THRESHOLD = 0.55  # model must be ≥70% confident before acting (was 0.3)
+PROB_THRESHOLD = 0.70   # model must be ≥70% confident before acting (was 0.3)
 BUFFER_SIZE    = 5      # consecutive frames needed to confirm a stage change
 VIS_THRESHOLD  = 0.5    # landmark visibility needed for angle calculations
 
@@ -520,11 +522,13 @@ def Make_Predictions(path_model, ups, downs, webcam=0):
             if not ret:
                 break
 
+            # Mirror for a natural mirror-like view
             image = cv2.flip(image, 1)
+
+            # BGR → RGB for MediaPipe
             image.flags.writeable = False
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             results = pose.process(image)
-
 
             # RGB → BGR for OpenCV display
             image.flags.writeable = True
@@ -645,7 +649,6 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
 
         with open(model_path, "rb") as f:
             model = pickle.load(f)
-        print(f"[DEBUG] Model classes: {model.classes_}")
 
         cap = cv2.VideoCapture(video_path)
         if not cap.isOpened():
@@ -655,46 +658,37 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                 "status": "error: could not open video file"
             }
 
-        # duration pehle nikalo cap band hone se pehle
-        fps = cap.get(cv2.CAP_PROP_FPS) or 0
-        total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0
-        dur_secs = (total_frames / fps) if fps > 0 else 0.0
-        dur_hours = dur_secs / 3600.0
-
-        # saare frames pehle collect karo
-        frames = []
-        while cap.isOpened():
-            ret, image = cap.read()
-            if not ret:
-                break
-            if image is None or image.size == 0:
-                continue
-            frames.append(image)
-
-        cap.release()  # ab band karo
-
-        counter = 0
-        current_stage = ""
-        stage_buffer = []
-        prob = 0.0
-        last_pred = ""
-        last_suggestion = ""
+        counter          = 0
+        current_stage    = ""
+        stage_buffer     = []    # rolling window of recent predictions
+        prob             = 0.0
+        last_pred        = ""
+        last_suggestion  = ""
         frames_processed = 0
 
         with mp_pose.Pose(
-                min_detection_confidence=0.5,
-                min_tracking_confidence=0.5
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5
         ) as pose:
 
-            for image in frames:
+            while cap.isOpened():
+                ret, image = cap.read()
+                if not ret:
+                    break
+
+                if image is None or image.size == 0:
+                    continue
+
                 try:
+                    # Mirror the frame for consistent orientation with training data
+
                     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-                    results = pose.process(image_rgb)
+                    results   = pose.process(image_rgb)
 
                     if not results.pose_landmarks:
                         continue
 
-                    lm_list = results.pose_landmarks.landmark
+                    lm_list  = results.pose_landmarks.landmark
 
                     selected = list(lm_list)
 
@@ -703,22 +697,23 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                         for lm in selected
                     ]).flatten().tolist()
 
-                    X = pd.DataFrame([row], columns=feature_cols)
+                    X    = pd.DataFrame([row], columns=feature_cols)
                     pred = model.predict(X)[0]
                     prob = float(model.predict_proba(X)[0].max())
 
-                    last_pred = pred
+                    last_pred        = pred
                     frames_processed += 1
                     print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}")
 
+                    # ── Frame buffer: only count when BUFFER_SIZE frames agree ──
                     stage_buffer.append(pred)
                     if len(stage_buffer) > BUFFER_SIZE:
                         stage_buffer.pop(0)
 
                     confirmed = (
-                            len(stage_buffer) == BUFFER_SIZE
-                            and len(set(stage_buffer)) == 1
-                            and prob >= PROB_THRESHOLD
+                        len(stage_buffer) == BUFFER_SIZE
+                        and len(set(stage_buffer)) == 1
+                        and prob >= PROB_THRESHOLD
                     )
 
                     if confirmed:
@@ -730,6 +725,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                             current_stage = pred
                             counter += 1
 
+                    # ── Joint-angle posture check (every frame) ───────────
                     suggestion = validate_posture(model_path, pred, lm_list)
                     if suggestion:
                         last_suggestion = suggestion
@@ -737,7 +733,11 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                 except Exception:
                     print(f"[process_video] Skipped frame: {traceback.format_exc()}")
                     continue
-
+        fps = cap.get(cv2.CAP_PROP_FPS) or 0
+        total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0
+        dur_secs = (total_frames / fps) if fps > 0 else 0.0
+        dur_hours = dur_secs / 3600.0
+        cap.release()
         print(f"[DEBUG] frames_processed={frames_processed}, counter={counter}, last_pred={last_pred}, prob={prob}")
         return {
             "reps": counter,
