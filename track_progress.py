@@ -183,7 +183,19 @@ class TrackProgress:
                 hour = food_date.hour
                 matched, _, _ = self._is_matched_with_time(name, hour, day_index, plan_by_day)
                 if matched:
-                    daily_calories[day_key] = daily_calories.get(day_key, 0) + float(food.get("calories", 0))
+                    # Planned food ki calories tak hi count karo
+                    planned_cal = 0.0
+                    day_meals = self.meal_plan.get(DAYS[day_index], {}).get("meals", {})
+                    for meal_data in day_meals.values():
+                        for item in meal_data.get("items", []):
+                            pf = self._normalize(item.get("food_name", ""))
+                            food_norm = self._normalize(food.get("food_name", ""))
+                            if food_norm in pf or pf in food_norm:
+                                planned_cal = float(item.get("calories", 0))
+                                break
+                    counted = min(float(food.get("calories", 0)), planned_cal) if planned_cal > 0 else float(
+                        food.get("calories", 0))
+                    daily_calories[day_key] = daily_calories.get(day_key, 0) + counted
                 if day_index in plan_by_day:
                     daily_target[day_key] = plan_by_day[day_index]["target_calories"]
             except:
@@ -341,13 +353,26 @@ class TrackProgress:
 
                 for slot_name, slot in meal_slots.items():
                     w_start, w_end = slot["window"]
-                    in_time  = w_start <= hour < w_end
+                    in_time = w_start <= hour < w_end
                     name_hit = any(name in pf or pf in name for pf in slot["planned_foods"])
                     if in_time and name_hit:
-                        slot["eaten_calories"] += cal
-                        slot["protein"]        += prot
-                        slot["fat"]            += fat
-                        slot["carbs"]          += carbs
+                        # Planned food ki target calories dhundo
+                        planned_cal_for_food = 0.0
+                        for item in planned_meals.get(slot_name, {}).get("items", []):
+                            pf_norm = self._normalize(item.get("food_name", ""))
+                            if name in pf_norm or pf_norm in name:
+                                planned_cal_for_food = float(item.get("calories", 0))
+                                break
+                        # Agar planned calories mili, toh us se zyada count mat karo
+                        if planned_cal_for_food > 0:
+                            remaining = max(0.0, planned_cal_for_food - slot["eaten_calories"])
+                            counted_cal = min(cal, remaining)
+                        else:
+                            counted_cal = cal
+                        slot["eaten_calories"] += counted_cal
+                        slot["protein"] += prot * (counted_cal / cal if cal > 0 else 1)
+                        slot["fat"] += fat * (counted_cal / cal if cal > 0 else 1)
+                        slot["carbs"] += carbs * (counted_cal / cal if cal > 0 else 1)
                         matched = True
                         break
 
