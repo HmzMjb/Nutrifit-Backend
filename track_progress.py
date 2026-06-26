@@ -95,9 +95,19 @@ class TrackProgress:
                         normalized = self._normalize(n)
                         foods.add(normalized)
                         meal_foods.add(normalized)
+                food_calories = {}
+                for item in meal.get("items", []):
+                    n = item.get("food_name", "")
+                    if n:
+                        normalized = self._normalize(n)
+                        foods.add(normalized)
+                        meal_foods.add(normalized)
+                        food_calories[normalized] = float(item.get("calories", 0))
+
                 meal_windows[key] = {
-                    "foods":  meal_foods,
+                    "foods": meal_foods,
                     "window": window,
+                    "food_calories": food_calories,  # ← naya
                 }
             plan[day_index] = {
                 "foods":           foods,
@@ -181,7 +191,7 @@ class TrackProgress:
                 day_index = food_date.weekday()
                 name = self._normalize(food.get("food_name", ""))
                 hour = food_date.hour
-                matched, _, _ = self._is_matched_with_time(name, hour, day_index, plan_by_day)
+                matched, _, _, planned_cal = self._is_matched_with_time(name, hour, day_index, plan_by_day)
                 if matched:
                     # Planned food ki calories tak hi count karo
                     planned_cal = 0.0
@@ -267,14 +277,10 @@ class TrackProgress:
             "no_of_days_passed": days_passed,
             "progress": False,
         }
+
     def _is_matched_with_time(self, food_name: str, hour: int, day_index: int, plan_by_day: dict):
-        """
-        Returns: (matched: bool, late: bool, expected_meal: str)
-        matched = naam aur time dono sahi
-        late    = naam match lekin galat waqt
-        """
         if day_index not in plan_by_day:
-            return False, False, ""
+            return False, False, "", 0.0  # ← extra return value
 
         name = self._normalize(food_name)
         meal_windows = plan_by_day[day_index].get("meal_windows", {})
@@ -282,15 +288,16 @@ class TrackProgress:
         for meal_name, info in meal_windows.items():
             name_hit = any(name in pf or pf in name for pf in info["foods"])
             if name_hit:
+                # Planned calories dhundo is specific food ki
+                planned_cal = info.get("food_calories", {}).get(name, 0.0)
                 w_start, w_end = info["window"]
                 in_time = w_start <= hour < w_end
                 if in_time:
-                    return True, False, meal_name   # sahi waqt, sahi khana
+                    return True, False, meal_name, planned_cal
                 else:
-                    return False, True, meal_name   # sahi khana, galat waqt
+                    return False, True, meal_name, planned_cal
 
-        return False, False, ""  # naam bhi match nahi
-
+        return False, False, "", 0.0
     def _macro_percentages(self, eaten: dict, target: dict) -> dict:
         return {
             "proteinPercentage": min((eaten["protein"] / target["protein"]) * 100, 100) if target.get("protein") else 0,
@@ -500,13 +507,16 @@ class TrackProgress:
 
                 weekly_all_eaten[day_index] += cal
 
-                matched, late, expected_meal = self._is_matched_with_time(name, hour, day_index, plan_by_day)
+                matched, late, expected_meal, planned_cal = self._is_matched_with_time(name, hour, day_index,
+                                                                                       plan_by_day)
 
                 if matched:
-                    weekly_calories[day_index] += cal
-                    weekly_protein[day_index]  += prot
-                    weekly_fat[day_index]      += fat
-                    weekly_carbs[day_index]    += carbs
+                    counted_cal = min(cal, planned_cal) if planned_cal > 0 else cal
+                    ratio = counted_cal / cal if cal > 0 else 1.0
+                    weekly_calories[day_index] += counted_cal
+                    weekly_protein[day_index] += prot * ratio
+                    weekly_fat[day_index] += fat * ratio
+                    weekly_carbs[day_index] += carbs * ratio
                 elif late:
                     if food_date.date() == today.date():
                         meal_end_hour = MEAL_WINDOWS.get(expected_meal, (0, 23))[1]
@@ -623,13 +633,16 @@ class TrackProgress:
 
                 monthly_all_eaten[week_index] += cal
 
-                matched, late, expected_meal = self._is_matched_with_time(name, hour, day_index, plan_by_day)
+                matched, late, expected_meal, planned_cal = self._is_matched_with_time(name, hour, day_index,
+                                                                                       plan_by_day)
 
                 if matched:
-                    monthly_calories[week_index] += cal
-                    monthly_protein[week_index]  += prot
-                    monthly_fat[week_index]      += fat
-                    monthly_carbs[week_index]    += carbs
+                    counted_cal = min(cal, planned_cal) if planned_cal > 0 else cal
+                    ratio = counted_cal / cal if cal > 0 else 1.0
+                    monthly_calories[week_index] += counted_cal
+                    monthly_protein[week_index] += prot * ratio
+                    monthly_fat[week_index] += fat * ratio
+                    monthly_carbs[week_index] += carbs * ratio
                 elif late:
                     if food_date.date() == today.date():
                         meal_end_hour = MEAL_WINDOWS.get(expected_meal, (0, 23))[1]
