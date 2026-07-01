@@ -4,6 +4,7 @@ import os
 import csv
 import time
 import pickle
+from collections import Counter
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -38,9 +39,6 @@ mp_drawing = mp.solutions.drawing_utils
 mp_pose    = mp.solutions.pose
 PL         = mp_pose.PoseLandmark   # convenient alias
 
-# ── Confidence thresholds (IMPROVED from Model_Predictions.py) ────────────────
-PROB_THRESHOLD = 0.70   # model must be ≥70% confident before acting (was 0.3)
-BUFFER_SIZE    = 5      # consecutive frames needed to confirm a stage change
 VIS_THRESHOLD  = 0.5    # landmark visibility needed for angle calculations
 
 
@@ -501,6 +499,9 @@ def Make_Predictions(path_model, ups, downs, webcam=0):
         downs      (list): Class names considered the "down" position.
         webcam     (int):  Camera index (0 = default webcam).
     """
+    BUFFER_SIZE    = 5
+    PROB_THRESHOLD = 0.70
+
     with open(path_model, 'rb') as f:
         model = pickle.load(f)
 
@@ -658,6 +659,11 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                 "status": "error: could not open video file"
             }
 
+        fps = cap.get(cv2.CAP_PROP_FPS) or 30
+
+        # ── Dynamic params: derived from video data in single pass ──
+        BUFFER_SIZE = max(2, int(fps * 0.15))   # 150ms time window
+
         counter          = 0
         current_stage    = ""
         stage_buffer     = []    # rolling window of recent predictions
@@ -705,15 +711,14 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                     frames_processed += 1
                     print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}")
 
-                    # ── Frame buffer: only count when BUFFER_SIZE frames agree ──
+                    # ── Frame buffer: majority voting for stage confirmation ──
                     stage_buffer.append(pred)
                     if len(stage_buffer) > BUFFER_SIZE:
                         stage_buffer.pop(0)
 
                     confirmed = (
                         len(stage_buffer) == BUFFER_SIZE
-                        and len(set(stage_buffer)) == 1
-                        and prob >= PROB_THRESHOLD
+                        and Counter(stage_buffer).most_common(1)[0][1] > len(stage_buffer) / 2
                     )
 
                     if confirmed:
