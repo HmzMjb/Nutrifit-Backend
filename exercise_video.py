@@ -489,86 +489,33 @@ def save_model(model, save_path):
 # ============================================================
 
 def train_deadlift():
-    """Full deadlift training flow: CSV header → label videos → train → save .pkl"""
-    # Step 1: Create CSV header
-    path_CSV = 'CSV_files/coords_DL_C_new.csv'
-    first_line_CSV_file(path_CSV)
-
-    # Step 2: Label videos
-    path_videos = [
-        'Excercise Videos/Videos/CorrectDeadlift_45f.mp4',
-        'Excercise Videos/Videos/RollingDeadlift_45f.mp4',
-        'Excercise Videos/Videos/BackDeadlift_45f.mp4'
-    ]
-    labels = {'up': 'u', 'down': 'd', 'down_low': 'l',
-              'down_roll': 'r', 'up_back': 'b', 'up_roll': 'g'}
-    for path_video in path_videos:
-        labeling_video(path_video, labels, path_CSV)
-        time.sleep(6)
-
-    # Step 3: Train model
-    X_train, X_test, y_train, y_test = Create_sample_label_dataset('CSV_files/coords_DL_C.csv')
+    """Train deadlift model from CSV and save to Models/Deadlift_rf.pkl"""
+    path_CSV = 'CSV_files/coords_DL_C.csv'
+    X_train, X_test, y_train, y_test = Create_sample_label_dataset(path_CSV)
     fitted_models = Train_Model(X_train, y_train)
     Test_Accuracy(fitted_models, X_test, y_test)
-
-    # Step 4: Save .pkl
     save_model(fitted_models['rf'], 'Models/Deadlift_rf.pkl')
     print("Deadlift model saved to Models/Deadlift_rf.pkl")
     return {"status": "success", "exercise": "deadlift"}
 
 
 def train_squat():
-    """Full squat training flow: CSV header → label videos → train → save .pkl"""
-    # Step 1: Create CSV header
-    path_CSV = 'CSV_files/coords_SQ_C_new.csv'
-    first_line_CSV_file(path_CSV)
-
-    # Step 2: Label videos
-    path_videos = [
-        'Excercise Videos/Videos/CorrectSquat_45f.mp4',
-        'Excercise Videos/Videos/ForwardSquat_45f.mp4',
-        'Excercise Videos/Videos/DeepSquat.mp4'
-    ]
-    labels = {'up': 'u', 'down': 'd', 'down_deep': 'l', 'down_forward': 'f'}
-    for path_video in path_videos:
-        labeling_video(path_video, labels, path_CSV)
-        time.sleep(6)
-
-    # Step 3: Train model
-    X_train, X_test, y_train, y_test = Create_sample_label_dataset('CSV_files/coords_SQ_C.csv')
+    """Train squat model from CSV and save to Models/Squat_rf.pkl"""
+    path_CSV = 'CSV_files/coords_SQ_C.csv'
+    X_train, X_test, y_train, y_test = Create_sample_label_dataset(path_CSV)
     fitted_models = Train_Model(X_train, y_train)
     Test_Accuracy(fitted_models, X_test, y_test)
-
-    # Step 4: Save .pkl
     save_model(fitted_models['rf'], 'Models/Squat_rf.pkl')
     print("Squat model saved to Models/Squat_rf.pkl")
     return {"status": "success", "exercise": "squat"}
 
 
 def train_bench():
-    """Full bench press training flow: CSV header → label videos → train → save .pkl"""
-    # Step 1: Create CSV header (22 landmarks for bench)
-    path_CSV = 'CSV_files/coords_BP_C_new.csv'
-    first_line_CSV_file(path_CSV, bench=True)
-
-    # Step 2: Label videos
-    path_videos = [
-        'Excercise Videos/Videos/CorrectBench_45f.mp4',
-        'Excercise Videos/Videos/TietBench_45f.mp4',
-        'Excercise Videos/Videos/RollBench_45f.mp4'
-    ]
-    labels = {'up': 'u', 'down': 'd', 'down_close': 'l',
-              'up_close': 'c', 'up_roll': 'r'}
-    for path_video in path_videos:
-        labeling_video(path_video, labels, path_CSV, bench=True)
-        time.sleep(6)
-
-    # Step 3: Train model
-    X_train, X_test, y_train, y_test = Create_sample_label_dataset('CSV_files/coords_BP_C.csv')
+    """Train bench press model from CSV and save to Models/Bench_rf.pkl"""
+    path_CSV = 'CSV_files/coords_BP_C.csv'
+    X_train, X_test, y_train, y_test = Create_sample_label_dataset(path_CSV)
     fitted_models = Train_Model(X_train, y_train)
     Test_Accuracy(fitted_models, X_test, y_test)
-
-    # Step 4: Save .pkl
     save_model(fitted_models['rf'], 'Models/Bench_rf.pkl')
     print("Bench model saved to Models/Bench_rf.pkl")
     return {"status": "success", "exercise": "bench"}
