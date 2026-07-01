@@ -652,6 +652,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
             model = pickle.load(f)
 
         cap = cv2.VideoCapture(video_path)
+        cap.set(cv2.CAP_PROP_ORIENTATION_AUTO, 1)
         if not cap.isOpened():
             return {
                 "reps": 0, "confidence": 0.0, "pose": "",
