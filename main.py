@@ -159,6 +159,34 @@ def handle_exercise_video_endpoint():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route("/train_deadlift", methods=["POST"])
+def handle_train_deadlift():
+    from exercise_video import train_deadlift
+    try:
+        result = train_deadlift()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/train_squat", methods=["POST"])
+def handle_train_squat():
+    from exercise_video import train_squat
+    try:
+        result = train_squat()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/train_bench", methods=["POST"])
+def handle_train_bench():
+    from exercise_video import train_bench
+    try:
+        result = train_bench()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
 @app.route("/chatbot", methods=["POST"])
 def chatbot_endpoint():
     data = request.get_json()

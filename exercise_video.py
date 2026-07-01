@@ -4,7 +4,6 @@ import os
 import csv
 import time
 import pickle
-from collections import Counter
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -39,6 +38,9 @@ mp_drawing = mp.solutions.drawing_utils
 mp_pose    = mp.solutions.pose
 PL         = mp_pose.PoseLandmark   # convenient alias
 
+# ── Confidence thresholds (IMPROVED from Model_Predictions.py) ────────────────
+PROB_THRESHOLD = 0.70   # model must be ≥70% confident before acting (was 0.3)
+BUFFER_SIZE    = 5      # consecutive frames needed to confirm a stage change
 VIS_THRESHOLD  = 0.5    # landmark visibility needed for angle calculations
 
 
@@ -478,6 +480,48 @@ def save_model(model, save_path):
 
 
 # ============================================================
+# ON-DEMAND EXERCISE TRAINING
+# ============================================================
+# Called by Flask API endpoints to train a specific exercise
+# model from CSV data and save to Models/ folder.
+# Only trains the RF model (same as __main__ block in
+# pose_identifier.py) with updated paths.
+# ============================================================
+
+def train_deadlift():
+    """Train deadlift model from CSV and save to Models/Deadlift_rf.pkl"""
+    path_CSV = 'CSV_files/coords_DL_C.csv'
+    X_train, X_test, y_train, y_test = Create_sample_label_dataset(path_CSV)
+    fitted_models = Train_Model(X_train, y_train)
+    Test_Accuracy(fitted_models, X_test, y_test)
+    save_model(fitted_models['rf'], 'Models/Deadlift_rf.pkl')
+    print("Deadlift model saved to Models/Deadlift_rf.pkl")
+    return {"status": "success", "exercise": "deadlift"}
+
+
+def train_squat():
+    """Train squat model from CSV and save to Models/Squat_rf.pkl"""
+    path_CSV = 'CSV_files/coords_SQ_C.csv'
+    X_train, X_test, y_train, y_test = Create_sample_label_dataset(path_CSV)
+    fitted_models = Train_Model(X_train, y_train)
+    Test_Accuracy(fitted_models, X_test, y_test)
+    save_model(fitted_models['rf'], 'Models/Squat_rf.pkl')
+    print("Squat model saved to Models/Squat_rf.pkl")
+    return {"status": "success", "exercise": "squat"}
+
+
+def train_bench():
+    """Train bench press model from CSV and save to Models/Bench_rf.pkl"""
+    path_CSV = 'CSV_files/coords_BP_C.csv'
+    X_train, X_test, y_train, y_test = Create_sample_label_dataset(path_CSV)
+    fitted_models = Train_Model(X_train, y_train)
+    Test_Accuracy(fitted_models, X_test, y_test)
+    save_model(fitted_models['rf'], 'Models/Bench_rf.pkl')
+    print("Bench model saved to Models/Bench_rf.pkl")
+    return {"status": "success", "exercise": "bench"}
+
+
+# ============================================================
 # REAL-TIME WEBCAM PREDICTION  (IMPROVED from Model_Predictions.py)
 # ============================================================
 # Improvements over original Make_Predictions():
@@ -499,9 +543,6 @@ def Make_Predictions(path_model, ups, downs, webcam=0):
         downs      (list): Class names considered the "down" position.
         webcam     (int):  Camera index (0 = default webcam).
     """
-    BUFFER_SIZE    = 5
-    PROB_THRESHOLD = 0.70
-
     with open(path_model, 'rb') as f:
         model = pickle.load(f)
 
@@ -659,11 +700,6 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                 "status": "error: could not open video file"
             }
 
-        fps = cap.get(cv2.CAP_PROP_FPS) or 30
-
-        # ── Dynamic params: derived from video data in single pass ──
-        BUFFER_SIZE = max(2, int(fps * 0.15))   # 150ms time window
-
         counter          = 0
         current_stage    = ""
         stage_buffer     = []    # rolling window of recent predictions
@@ -711,14 +747,15 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                     frames_processed += 1
                     print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}")
 
-                    # ── Frame buffer: majority voting for stage confirmation ──
+                    # ── Frame buffer: only count when BUFFER_SIZE frames agree ──
                     stage_buffer.append(pred)
                     if len(stage_buffer) > BUFFER_SIZE:
                         stage_buffer.pop(0)
 
                     confirmed = (
                         len(stage_buffer) == BUFFER_SIZE
-                        and Counter(stage_buffer).most_common(1)[0][1] > len(stage_buffer) / 2
+                        and len(set(stage_buffer)) == 1
+                        and prob >= PROB_THRESHOLD
                     )
 
                     if confirmed:
@@ -774,116 +811,6 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
 # ============================================================
 
 if __name__ == "__main__":
-
-    # ============================================================
-    # LABELING SESSIONS
-    # ============================================================
-    # Run whichever exercise you need to label.
-    # Each exercise creates its own CSV and loops over its videos.
-    # ============================================================
-
-    # ── DEADLIFT — LABELING ──────────────────────────────────────
-    # Classes: up, down, down_low, down_roll, up_back, up_roll
-    path_CSV   = 'CSV_files/coords_DL_C_new.csv'
-    path_videos = [
-        'Videos/CorrectDeadlift_45f.mp4',
-        'Videos/RollingDeadlift_45f.mp4',
-        'Videos/BackDeadlift_45f.mp4'
-    ]
-    labels = {'up': 'u', 'down': 'd', 'down_low': 'l',
-              'down_roll': 'r', 'up_back': 'b', 'up_roll': 'g'}
-    first_line_CSV_file(path_CSV)
-    for path_video in path_videos:
-        labeling_video(path_video, labels, path_CSV)
-        time.sleep(6)
-
-    # ── SQUAT — LABELING ─────────────────────────────────────────
-    # Classes: up, down, down_deep, down_forward
-    path_CSV   = 'CSV_files/coords_SQ_C_new.csv'
-    path_videos = [
-        'Videos/CorrectSquat_45f.mp4',
-        'Videos/ForwardSquat_45f.mp4',
-        'Videos/DeepSquat.mp4'
-    ]
-    labels = {'up': 'u', 'down': 'd', 'down_deep': 'l', 'down_forward': 'f'}
-    first_line_CSV_file(path_CSV)
-    for path_video in path_videos:
-        labeling_video(path_video, labels, path_CSV)
-        time.sleep(6)
-
-    # ── BENCH PRESS — LABELING ───────────────────────────────────
-    # Classes: up, down, down_close, up_close, up_roll
-    # Uses only 22 landmarks — hips irrelevant for bench press.
-    path_CSV   = 'CSV_files/coords_BP_C_new.csv'
-    path_videos = [
-        'Videos/CorrectBench_45f.mp4',
-        'Videos/TietBench_45f.mp4',
-        'Videos/RollBench_45f.mp4'
-    ]
-    labels = {'up': 'u', 'down': 'd', 'down_close': 'l',
-              'up_close': 'c', 'up_roll': 'r'}
-    first_line_CSV_file(path_CSV, bench=True)
-    for path_video in path_videos:
-        labeling_video(path_video, labels, path_CSV, bench=True)
-        time.sleep(6)
-
-    # ============================================================
-    # MODEL TRAINING
-    # ============================================================
-
-    # ── TRAIN DEADLIFT MODEL ─────────────────────────────────────
-    # Merges original + updated dataset, trains all pipelines,
-    # evaluates accuracy, saves RF model.
-    path_CSV_DL     = 'CSV_files/coords_DL_C.csv'
-    path_CSV_DL_new = 'CSV_files/coords_DL_C_new.csv'
-    df_dl = pd.concat([pd.read_csv(path_CSV_DL), pd.read_csv(path_CSV_DL_new)], ignore_index=True)
-    df_dl.to_csv('CSV_files/coords_DL_merged.csv', index=False)
-    X_train, X_test, y_train, y_test = Create_sample_label_dataset('CSV_files/coords_DL_merged.csv')
-    fitted_models = Train_Model(X_train, y_train)
-    Test_Accuracy(fitted_models, X_test, y_test)
-    save_model(fitted_models['rf'], 'Models/Deadlift_rf.pkl')
-
-    # ── TRAIN SQUAT MODEL ────────────────────────────────────────
-    X_train, X_test, y_train, y_test = Create_sample_label_dataset('CSV_files/coords_SQ_C.csv')
-    fitted_models = Train_Model(X_train, y_train)
-    Test_Accuracy(fitted_models, X_test, y_test)
-    save_model(fitted_models['rf'], 'Models/Squat_rf.pkl')
-
-    # ── TRAIN BENCH PRESS MODEL ──────────────────────────────────
-    # Uses only the first 22 landmark columns (hips excluded).
-    X_train, X_test, y_train, y_test = Create_sample_label_dataset('CSV_files/coords_BP_C.csv')
-    fitted_models = Train_Model(X_train, y_train)
-    Test_Accuracy(fitted_models, X_test, y_test)
-    save_model(fitted_models['rf'], 'Models/Bench_rf.pkl')
-
-    # ============================================================
-    # WEBCAM SESSIONS
-    # ============================================================
-
-    # ── DEADLIFT — WEBCAM ────────────────────────────────────────
-    # Bad classes (up_back, up_roll, down_roll, down_low) handled
-    # automatically via BAD_CLASS_MSGS — never count as reps.
-    Make_Predictions(
-        "Models/Deadlift_rf.pkl",
-        ups=["up"],
-        downs=["down"],
-        webcam=0
-    )
-
-    # ── SQUAT — WEBCAM ───────────────────────────────────────────
-    # Bad classes (down_deep, down_forward) handled automatically.
-    Make_Predictions(
-        "Models/Squat_rf.pkl",
-        ups=["up"],
-        downs=["down"],
-        webcam=0
-    )
-
-    # ── BENCH PRESS — WEBCAM ─────────────────────────────────────
-    # Bad classes (up_close, up_roll, down_close) handled automatically.
-    Make_Predictions(
-        "Models/Bench_rf.pkl",
-        ups=["up"],
-        downs=["down"],
-        webcam=0
-    )
+    train_deadlift()
+    train_squat()
+    train_bench()
