@@ -1,6 +1,7 @@
 #exercise_video.py pycharm
 
 import os
+import sys
 import csv
 import time
 import pickle
@@ -666,6 +667,10 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
         last_suggestion  = ""
         frames_processed = 0
 
+        print(f"[ENV] Python={sys.version.split()[0]}, MediaPipe={mp.__version__}, "
+              f"OpenCV={cv2.__version__}, sklearn={__import__('sklearn').__version__}")
+        sys.stdout.flush()
+
         with mp_pose.Pose(
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5
@@ -683,6 +688,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                     # Mirror the frame for consistent orientation with training data
 
                     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                    image_rgb.flags.writeable = False
                     results   = pose.process(image_rgb)
 
                     if not results.pose_landmarks:
@@ -704,6 +710,15 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                     last_pred        = pred
                     frames_processed += 1
                     print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}")
+
+                    if frames_processed <= 3:
+                        print(f"[LM] Frame {frames_processed}: "
+                              f"nose=({lm_list[0].x:.4f},{lm_list[0].y:.4f},{lm_list[0].z:.4f}), "
+                              f"l_shoulder=({lm_list[11].x:.4f},{lm_list[11].y:.4f},{lm_list[11].z:.4f}), "
+                              f"l_hip=({lm_list[23].x:.4f},{lm_list[23].y:.4f},{lm_list[23].z:.4f}), "
+                              f"l_knee=({lm_list[25].x:.4f},{lm_list[25].y:.4f},{lm_list[25].z:.4f})")
+
+                    sys.stdout.flush()
 
                     # ── Frame buffer: only count when BUFFER_SIZE frames agree ──
                     stage_buffer.append(pred)
@@ -732,6 +747,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
 
                 except Exception:
                     print(f"[process_video] Skipped frame: {traceback.format_exc()}")
+                    sys.stdout.flush()
                     continue
         fps = cap.get(cv2.CAP_PROP_FPS) or 0
         total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0
@@ -739,6 +755,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
         dur_hours = dur_secs / 3600.0
         cap.release()
         print(f"[DEBUG] frames_processed={frames_processed}, counter={counter}, last_pred={last_pred}, prob={prob}")
+        sys.stdout.flush()
         return {
             "reps": counter,
             "confidence": round(prob, 2),
@@ -753,6 +770,7 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
     except Exception:
         error_detail = traceback.format_exc()
         print(f"[process_video] FATAL: {error_detail}")
+        sys.stdout.flush()
         return {
             "reps": 0, "confidence": 0.0, "pose": "",
             "suggestion": "", "frames_processed": 0,
