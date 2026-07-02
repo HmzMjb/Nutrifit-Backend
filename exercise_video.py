@@ -40,7 +40,7 @@ mp_pose    = mp.solutions.pose
 PL         = mp_pose.PoseLandmark   # convenient alias
 
 # ── Confidence thresholds (IMPROVED from Model_Predictions.py) ────────────────
-PROB_THRESHOLD = 0.70   # model must be ≥70% confident before acting (was 0.3)
+PROB_THRESHOLD = 0.7   # model must be ≥70% confident before acting (was 0.3)
 BUFFER_SIZE    = 5      # consecutive frames needed to confirm a stage change
 VIS_THRESHOLD  = 0.5    # landmark visibility needed for angle calculations
 
@@ -712,12 +712,11 @@ def process_video(video_path, model_path="Models/Bench_rf.pkl"):
                     frames_processed += 1
                     print(f"[Frame {frames_processed}] pred={pred}, prob={prob:.2f}")
 
-                    if frames_processed <= 3:
-                        print(f"[LM] Frame {frames_processed}: "
-                              f"nose=({lm_list[0].x:.4f},{lm_list[0].y:.4f},{lm_list[0].z:.4f}), "
-                              f"l_shoulder=({lm_list[11].x:.4f},{lm_list[11].y:.4f},{lm_list[11].z:.4f}), "
-                              f"l_hip=({lm_list[23].x:.4f},{lm_list[23].y:.4f},{lm_list[23].z:.4f}), "
-                              f"l_knee=({lm_list[25].x:.4f},{lm_list[25].y:.4f},{lm_list[25].z:.4f})")
+                    print(f"[LM] Frame {frames_processed}: "
+                          f"nose=({lm_list[0].x:.4f},{lm_list[0].y:.4f},{lm_list[0].z:.4f}), "
+                          f"l_shoulder=({lm_list[11].x:.4f},{lm_list[11].y:.4f},{lm_list[11].z:.4f}), "
+                          f"l_hip=({lm_list[23].x:.4f},{lm_list[23].y:.4f},{lm_list[23].z:.4f}), "
+                          f"l_knee=({lm_list[25].x:.4f},{lm_list[25].y:.4f},{lm_list[25].z:.4f})")
 
                     sys.stdout.flush()
 
