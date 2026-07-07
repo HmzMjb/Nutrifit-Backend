@@ -290,7 +290,7 @@ class ProfessionalMealPlanner:
 
     # ==================== MEAL GENERATION ====================
     def _generate_meal(self, meal_type, meal_calories, macros_target, recent_foods, filtered_foods: pd.DataFrame,
-                       cooldown: int = 2) -> List[Dict]:
+                       cooldown: int = 2, user_food_list: list = None) -> List[Dict]:
         if meal_type == "breakfast":
             food_list = BREAKFAST_FOODS
         elif meal_type == "lunch":
@@ -302,11 +302,31 @@ class ProfessionalMealPlanner:
             filtered_foods["food_name_lower"].isin([f.lower() for f in food_list])
         ].copy()
 
+        if user_food_list:
+            user_food_lower = [f.lower() for f in user_food_list]
+            meal_pool = meal_pool[
+                meal_pool["food_name_lower"].isin(user_food_lower)
+            ].copy()
+
+        if meal_pool.empty:
+            raise ValueError(
+                f"No foods available for {meal_type} based on your food preferences, allergies, and health conditions. "
+                f"Please adjust your selections."
+            )
+
         meal_pool = meal_pool[~meal_pool["food_name"].isin(recent_foods)]
         if meal_pool.empty:
             meal_pool = filtered_foods[
                 filtered_foods["food_name_lower"].isin([f.lower() for f in food_list])
             ].copy()
+            if user_food_list:
+                user_food_lower = [f.lower() for f in user_food_list]
+                meal_pool = meal_pool[
+                    meal_pool["food_name_lower"].isin(user_food_lower)
+                ].copy()
+            if meal_pool.empty:
+                return []
+
         target_vector = np.array([
             macros_target["protein_g"],
             macros_target["carbs_g"],
@@ -337,7 +357,7 @@ class ProfessionalMealPlanner:
         return meal_items
 
     # ---------- MAIN MEAL PLAN ----------
-    def generate_meal_plan(self, profile, days=7, cooldown: int = 2) -> Dict:
+    def generate_meal_plan(self, profile, days=7, cooldown: int = 2, food_preferences: dict = None) -> Dict:
         """Generate a complete personalized meal plan"""
 
         weekly_plan = {}
@@ -390,13 +410,16 @@ class ProfessionalMealPlanner:
                     "fat_g": total_fat * meal_percentage
                 }
 
+                user_food_list = food_preferences.get(meal_type, []) if food_preferences else []
+
                 meal_items = self._generate_meal(
                     meal_type=meal_type,
                     meal_calories=meal_calories,
                     macros_target=meal_macros,
                     filtered_foods=filtered_foods,
                     recent_foods=recent_foods[meal_type],
-                    cooldown=cooldown
+                    cooldown=cooldown,
+                    user_food_list=user_food_list
                 )
 
                 for item in meal_items:
@@ -455,6 +478,14 @@ def generate_meal_plan_route(user_data: dict):
         user_data["allergies"] = [
             a.strip() for a in user_data["allergies"].split(",")
         ]
+
+    food_preferences = user_data.get("food_preferences")
+    if not food_preferences:
+        return {"status": "error", "message": "Food preferences are required. Please select at least 1 food for each meal type."}
+    for meal_type in ["breakfast", "lunch", "dinner"]:
+        if not food_preferences.get(meal_type):
+            return {"status": "error", "message": f"Please select at least 1 food for {meal_type}."}
+
     planner = ProfessionalMealPlanner(
         foods_csv="foods4.csv",
         profiles_csv="pakistan_user_profiles.csv",
@@ -462,7 +493,7 @@ def generate_meal_plan_route(user_data: dict):
     )
 
     try:
-        plan = planner.generate_meal_plan(user_data, days=7)
+        plan = planner.generate_meal_plan(user_data, days=7, food_preferences=food_preferences)
         return {"status": "success", **plan}
     except Exception as e:
         return {"status": "error", "message": str(e)}
