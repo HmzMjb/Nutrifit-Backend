@@ -215,9 +215,9 @@ class ProfessionalMealPlanner:
             food_pool: pd.DataFrame,
             target_macros: np.ndarray,
             top_n: int = 3,
-            diversity_weight: float = 0.1
+            candidate_pool_size: int = 12
     ) -> List[pd.Series]:
-        """Select top N foods based on macro similarity to target"""
+        """Select top N foods using weighted random sampling from a wider candidate pool."""
         scores = []
 
         for idx, row in food_pool.iterrows():
@@ -226,16 +226,23 @@ class ProfessionalMealPlanner:
                 row["carbs_g"],
                 row["fat_g"]
             ])
-
             similarity = self._cosine_similarity(food_vector, target_macros)
-            diversity_bonus = np.random.uniform(0, diversity_weight)
-            final_score = similarity + diversity_bonus
-
-            scores.append((final_score, row))
+            scores.append((similarity, row))
 
         scores.sort(key=lambda x: x[0], reverse=True)
-        return [row for _, row in scores[:top_n]]
+        candidates = scores[:min(candidate_pool_size, len(scores))]
 
+        if not candidates:
+            return []
+
+        if len(candidates) <= top_n:
+            return [row for _, row in candidates]
+
+        sims = np.array([max(s, 0.001) for s, _ in candidates])
+        probs = sims / sims.sum()
+
+        chosen_idx = np.random.choice(len(candidates), size=top_n, replace=False, p=probs)
+        return [candidates[i][1] for i in chosen_idx]
     @staticmethod
     def _solve_portions(selected_foods, target_calories, target_protein):
         A = np.array([[f["calories"] / 100 for f in selected_foods], [f["protein_g"] / 100 for f in selected_foods]])
@@ -289,7 +296,7 @@ class ProfessionalMealPlanner:
         return df
 
     # ==================== MEAL GENERATION ====================
-    def _generate_meal(self, meal_type, meal_calories, macros_target, recent_foods, filtered_foods: pd.DataFrame,
+    def _generate_meal(self, meal_type, meal_calories, macros_target, used_foods, filtered_foods: pd.DataFrame,
                        cooldown: int = 2, user_food_list: list = None) -> List[Dict]:
         if meal_type == "breakfast":
             food_list = BREAKFAST_FOODS
@@ -314,16 +321,23 @@ class ProfessionalMealPlanner:
                 f"Please adjust your selections."
             )
 
-        meal_pool = meal_pool[~meal_pool["food_name"].isin(recent_foods)]
-        if meal_pool.empty:
-            meal_pool = filtered_foods[
-                filtered_foods["food_name_lower"].isin([f.lower() for f in food_list])
-            ].copy()
-            if user_food_list:
-                user_food_lower = [f.lower() for f in user_food_list]
-                meal_pool = meal_pool[
-                    meal_pool["food_name_lower"].isin(user_food_lower)
-                ].copy()
+        # Exclude foods already used this week
+        unused_pool = meal_pool[~meal_pool["food_name"].isin(used_foods)]
+
+        if not unused_pool.empty:
+            meal_pool = unused_pool
+        else:
+            # Whole pool exhausted this week — keep only the most recent
+            # `cooldown` items excluded so at least back-to-back repeats
+            # are avoided, instead of wiping tracking completely.
+            used_list = list(used_foods)
+            used_foods.clear()
+            for f in used_list[-min(cooldown, len(used_list)):]:
+                used_foods.add(f)
+
+            unused_pool = meal_pool[~meal_pool["food_name"].isin(used_foods)]
+            meal_pool = unused_pool if not unused_pool.empty else meal_pool
+
             if meal_pool.empty:
                 return []
 
@@ -355,16 +369,15 @@ class ProfessionalMealPlanner:
             meal_items.append(item)
 
         return meal_items
-
     # ---------- MAIN MEAL PLAN ----------
     def generate_meal_plan(self, profile, days=7, cooldown: int = 2, food_preferences: dict = None) -> Dict:
         """Generate a complete personalized meal plan"""
 
         weekly_plan = {}
-        recent_foods = {
-            "breakfast": [],
-            "lunch": [],
-            "dinner": []
+        used_this_week = {
+            "breakfast": set(),
+            "lunch": set(),
+            "dinner": set()
         }
 
         goal = profile.get("target_goal", "maintain").lower()
@@ -380,15 +393,18 @@ class ProfessionalMealPlanner:
             )
 
         for day_num in range(1, days + 1):
-
             profile_df = pd.DataFrame([profile])
             daily_calories = float(self.model.predict(profile_df)[0])
 
             carb_ratio, protein_ratio, fat_ratio = MACRO_SPLITS[goal]
 
-            total_protein = (daily_calories * protein_ratio) / 4
-            total_carbs = (daily_calories * carb_ratio) / 4
-            total_fat = (daily_calories * fat_ratio) / 9
+                # Small ±7% day-to-day variation so the target macro vector isn't
+                # identical every day — this lets different foods become the
+                # "closest match" on different days without breaking the diet plan.
+            daily_jitter = np.random.uniform(0.93, 1.07)
+            total_protein = (daily_calories * protein_ratio * daily_jitter) / 4
+            total_carbs = (daily_calories * carb_ratio * daily_jitter) / 4
+            total_fat = (daily_calories * fat_ratio * daily_jitter) / 9
 
             day_plan = {
                 "predicted_daily_calories": round(daily_calories, 1),
@@ -417,15 +433,13 @@ class ProfessionalMealPlanner:
                     meal_calories=meal_calories,
                     macros_target=meal_macros,
                     filtered_foods=filtered_foods,
-                    recent_foods=recent_foods[meal_type],
+                    used_foods=used_this_week[meal_type],
                     cooldown=cooldown,
                     user_food_list=user_food_list
                 )
 
                 for item in meal_items:
-                    recent_foods[meal_type].append(item["food_name"])
-
-                recent_foods[meal_type] = recent_foods[meal_type][-cooldown:]
+                    used_this_week[meal_type].add(item["food_name"])
 
                 meal_totals = {
                     "calories": sum(item["calories"] for item in meal_items),
@@ -441,8 +455,51 @@ class ProfessionalMealPlanner:
 
             weekly_plan[f"day_{day_num}"] = day_plan
 
-        return self._add_summary(weekly_plan, profile)
+        result = self._add_summary(weekly_plan, profile)
 
+        variety_warnings = self._check_variety_sufficiency(filtered_foods, food_preferences, days)
+        if variety_warnings:
+            result["variety_warnings"] = variety_warnings
+
+        return result
+
+    ITEMS_PER_MEAL = 3  # matches top_n used in _get_top_foods
+
+    def _check_variety_sufficiency(self, filtered_foods, food_preferences, days=7):
+        """
+        Formula: required_unique_foods = items_per_meal * days
+        e.g. 3 items/meal * 7 days = 21 unique foods needed for zero repeats
+        in that meal type across the week.
+        """
+        warnings = {}
+        meal_food_lists = {
+            "breakfast": BREAKFAST_FOODS,
+            "lunch": LUNCH_FOODS,
+            "dinner": DINNER_FOODS
+        }
+
+        for meal_type, food_list in meal_food_lists.items():
+            pool = filtered_foods[
+                filtered_foods["food_name_lower"].isin([f.lower() for f in food_list])
+            ]
+            user_prefs = food_preferences.get(meal_type) if food_preferences else None
+            if user_prefs:
+                user_food_lower = [f.lower() for f in user_prefs]
+                pool = pool[pool["food_name_lower"].isin(user_food_lower)]
+
+            available = pool.shape[0]
+            required = self.ITEMS_PER_MEAL * days
+
+            if available < required:
+                repeat_every = max(1, available // self.ITEMS_PER_MEAL)
+                warnings[meal_type] = (
+                    f"Only {available} {meal_type} option(s) available, but {required} "
+                    f"are needed for zero repeats across {days} days. "
+                    f"Expect foods to repeat roughly every {repeat_every} day(s). "
+                    f"Add more {meal_type} preferences for better variety."
+                )
+
+        return warnings
     def _add_summary(
             self,
             meal_plan: Dict,
