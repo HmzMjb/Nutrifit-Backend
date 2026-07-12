@@ -33,7 +33,7 @@ TONE: Friendly, encouraging, professional — like a coach who genuinely cares a
 class Chatbot:
     def __init__(self):
         self.model = genai.GenerativeModel(
-            model_name="gemini-2.5-flash-001",
+            model_name="gemini-2.5-flash-preview",
             system_instruction=SYSTEM_PROMPT
         )
 
