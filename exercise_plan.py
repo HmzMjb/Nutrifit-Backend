@@ -86,7 +86,7 @@ class exercise_plan:
         filtered_ex = filtered_ex.sample(frac=1, random_state=user_hash).reset_index(drop=True)
 
         # Mandatory exercises har din
-        mandatory_names = ['Squats','Bench Press', 'Deadlift']
+        mandatory_names = ['Bench Press', 'Squats', 'Deadlift']
         mandatory_df = self.exercise_df[
             self.exercise_df['exercise_name'].isin(mandatory_names)
         ].copy()
@@ -96,6 +96,7 @@ class exercise_plan:
         )
 
         mandatory_records = mandatory_df[['exercise_name', 'sets', 'repetitions', 'duration']].to_dict(orient='records')
+        mandatory_records.sort(key=lambda x: mandatory_names.index(x['exercise_name']))
 
         # Filtered list se mandatory exercises hata do
         filtered_ex = filtered_ex[~filtered_ex['exercise_name'].isin(mandatory_names)].reset_index(drop=True)
