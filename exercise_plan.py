@@ -86,7 +86,7 @@ class exercise_plan:
         filtered_ex = filtered_ex.sample(frac=1, random_state=user_hash).reset_index(drop=True)
 
         # Mandatory exercises har din
-        mandatory_names = ['Bench Press', 'Squats', 'Deadlift']
+        mandatory_names = ['Squats','Bench Press', 'Deadlift']
         mandatory_df = self.exercise_df[
             self.exercise_df['exercise_name'].isin(mandatory_names)
         ].copy()
