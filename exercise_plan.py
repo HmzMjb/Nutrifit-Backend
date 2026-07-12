@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 import hashlib
+import time
 
 class exercise_plan:
     def __init__(self, csv_path='excercise.csv'):
@@ -81,7 +82,7 @@ class exercise_plan:
         )
 
         # Deterministic shuffle
-        user_hash = int(hashlib.md5(str(user_profile).encode()).hexdigest(), 16) % (2**32)
+        user_hash = int(hashlib.md5((str(user_profile) + str(time.time())).encode()).hexdigest(), 16) % (2**32)
         filtered_ex = filtered_ex.sample(frac=1, random_state=user_hash).reset_index(drop=True)
 
         # Mandatory exercises har din

@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "C:\\Users\\HI-TECH\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\jni-1.0.0\\src\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\HI-TECH\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\Users\\HI-TECH\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\jni-1.0.0\\android\\.cxx\\RelWithDebInfo\\4k555zd5\\x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\HI-TECH\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\Users\\HI-TECH\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\jni-1.0.0\\android\\.cxx\\RelWithDebInfo\\4k555zd5\\x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "jni::@6890427a1f51a3e7e1df": {
+      "artifactName": "jni",
+      "abi": "x86_64",
+      "output": "C:\\Nutrifit_Frontend\\nutrifit\\build\\jni\\intermediates\\cxx\\RelWithDebInfo\\4k555zd5\\obj\\x86_64\\libdartjni.so",
+      "runtimeFiles": []
+    }
+  }
+}

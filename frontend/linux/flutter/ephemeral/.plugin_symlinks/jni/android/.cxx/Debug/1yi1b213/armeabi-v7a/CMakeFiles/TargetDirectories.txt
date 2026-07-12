@@ -1,0 +1,3 @@
+C:/Users/HI-TECH/AppData/Local/Pub/Cache/hosted/pub.dev/jni-1.0.0/android/.cxx/Debug/1yi1b213/armeabi-v7a/CMakeFiles/jni.dir
+C:/Users/HI-TECH/AppData/Local/Pub/Cache/hosted/pub.dev/jni-1.0.0/android/.cxx/Debug/1yi1b213/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/HI-TECH/AppData/Local/Pub/Cache/hosted/pub.dev/jni-1.0.0/android/.cxx/Debug/1yi1b213/armeabi-v7a/CMakeFiles/rebuild_cache.dir
